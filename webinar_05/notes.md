@@ -70,3 +70,17 @@
 6. Využi input() a opýtaj sa používateľa na meno a vek.
 7. Vytvor zoznam s rôznymi typmi hodnôt a skús indexovanie + slicing.
 
+## Najpoužívanejšie string metódy
+Metóda	        Popis	                                    Príklad
+upper()	        všetky písmená na veľké	                    "abc".upper() → "ABC"
+lower()	        všetky písmená na malé	                    "ABC".lower() → "abc"
+capitalize()	prvé písmeno veľké, ostatné malé	        "hello".capitalize() → "Hello"
+title()	        každé slovo začína veľkým písmenom	        "hello world".title() → "Hello World"
+replace(a, b)	nahradí reťazec a za b	                    "hi world".replace("world", "Python") → "hi Python"
+strip()	        odstráni medzery na začiatku a konci	    " text ".strip() → "text"
+lstrip()	    odstráni medzery naľavo	                    " text".lstrip() → "text"
+rstrip()	    odstráni medzery napravo	                "text ".rstrip() → "text"
+startswith(x)	overí, či text začína na x (case-sensitive)	"Hello".startswith("He") → True
+endswith(x)	    overí, či text končí na x	                "Python".endswith("on") → True
+find(x)	        index prvého výskytu x (-1 ak nenájde)	    "abcabc".find("b") → 1
+count(x)	    počet výskytov znaku alebo reťazca	        "abcabc".count("a") → 2
