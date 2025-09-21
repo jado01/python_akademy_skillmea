@@ -320,3 +320,16 @@
 19. Načítaj vek od používateľa a skontroluj, či je dospelý.
 20. Napíš program s if/elif/else, ktorý vypíše umiestnenie súťažiaceho.
 21. Skús ternárny operátor a porovnaj so štandardným if/else.
+
+##### Najpoužívanejšie metódy pre listy
+
+| Metóda                | Popis                                      | Príklad |
+|------------------------|--------------------------------------------|---------|
+| `append(x)`           | pridá prvok `x` na koniec zoznamu          | `[1,2].append(3)` → `[1, 2, 3]` |
+| `extend([...])`       | pridá viac prvkov                          | `[1,2].extend([3,4])` → `[1, 2, 3, 4]` |
+| `insert(i, x)`        | vloží prvok `x` na pozíciu `i`             | `[1,2].insert(1, 5)` → `[1, 5, 2]` |
+| `remove(x)`           | odstráni prvý výskyt `x`                   | `[1,2,2].remove(2)` → `[1, 2]` |
+| `count(x)`            | vráti počet výskytov prvku `x`             | `[1,2,2,3].count(2)` → `2` |
+| `index(x)`            | vráti index prvého výskytu `x`             | `[10,20,30].index(20)` → `1` |
+| `reverse()`           | otočí zoznam naopak (in-place)             | `[1,2,3].reverse()` → `[3,2,1]` |
+| `sort()`              | zoradí zoznam vzostupne (číselne alebo abecedne) | `[3,1,2].sort()` → `[1,2,3]` |
