@@ -80,6 +80,20 @@
         counter += 1
     print("Doors are closed")
     ```
+**Zhrnutie a porovnanie cyklov**:
+    🔹 Kedy použiť for cyklus:
+        - keď vieš dopredu, koľkokrát sa má cyklus zopakovať
+        - alebo keď chceš prejsť cez zoznam, string alebo iný iterovateľný objekt
+
+    🔹 Kedy použiť while
+        - keď nevieš dopredu, koľkokrát sa cyklus zopakuje
+        - keď závisí na nejakej podmienke, ktorá sa počas behu mení
+        - používa sa často v hrách, pri práci so vstupom, kým niekto nezadá správnu hodnotu
+    
+    📝 Zhrnutie
+        - For je kratší a ideálny, keď poznám počet opakovaní.
+        - While je flexibilnejší – použijem ho, keď neviem, koľkokrát sa cyklus zopakuje (napr. „kým používateľ nezadá správne heslo“).
+        
 ### Úlohy
 **Ulohy od lektora**
 
