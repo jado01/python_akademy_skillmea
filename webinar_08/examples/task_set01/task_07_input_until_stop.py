@@ -2,3 +2,8 @@
 # Vytvor cyklus, ktorý opakuje otázku 'Zadaj text:' a skončí, ak užívateľ zadá 'stop'.
 
 # Sem napíš svoje riešenie:
+
+while True:
+    text = input("Zadaj text:\n")
+    if text == "stop":
+        break
