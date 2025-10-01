@@ -15,9 +15,10 @@ Vyuka python cez skillmea.sk
 | 07 | 2025-09-08  | Cykly, vnorene cykly, podmienky       | [webinar_07](webinar_07/) |          |
 | 08 | 2025-09-10  | Cykly while, prikazy break, continue  | [webinar_08](webinar_08/) |          |
 | 09 | 2025-09-15  | Opakovanie cvičení, úvod do Scrumu    | [webinar_09](webinar_09/) |          |
-| 10 | 2025-09-17  | _________                             | [webinar_10](webinar_10/) |          |
-
-
+| 10 | 2025-09-17  | Tuples, funkcie, scope                | [webinar_10](webinar_10/) | Mutable vs immutable, default parametre |
+| 11 | 2025-09-18  | Dictionaries                          | [webinar_11](webinar_11/) | Základné operácie, get, iterovanie |
+| 12 | 2025-09-22  | Exceptions - vynimky, praca so subormi| [webinar_12](webinar_12/) |          |
+| 13 | 2025-09-24  |                                       | [webinar_13](webinar_13/) |          |
 ---
 
 ## 📖 Commit štýl a príspevky
