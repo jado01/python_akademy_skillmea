@@ -1,4 +1,4 @@
-# Webinár 7 – Cykly (for a while) (2025-09-22)
+# Webinár 7 – Cykly (for a while) (2025-09-08)
 
 ## Obsah
 - DRY (Don't Repeat Yourself)
