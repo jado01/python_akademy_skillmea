@@ -1,5 +1,7 @@
 import os
 import datetime
+NOTES_FILE = "notes.txt"
+SEPARATOR = "--------------------"
 
 def clear_terminal():
     if os.name == "nt":
@@ -17,23 +19,27 @@ Simple Notes Manager
 4.  Exit
 """)
 
+def pause(message="Press enter to continue..."):
+    input(message)
+
+
 def get_choice():
     while True:
         choice = input("Choose an option (1-4): ").strip()
         if choice in {"1", "2", "3", "4"}:
             return choice
         else:
-            print("Neplatna volba, skus 1-4")
+            print("Invalid choice. Please select 1-4.")
 
 def list_notes():
     print("--- Notes ---")
     data = read_notes()
     if data.strip() == "":
         print("There are no notes.")
-        input("Press enter to continue...")
+        pause()
         return
 
-    blocks = data.split("--------------------")
+    blocks = data.split(SEPARATOR)
     for block in blocks:
         if block.strip() == "":
             continue
@@ -62,12 +68,12 @@ def list_notes():
         print(f"Date: {date_value}")
         print(f"Note: {note_value}")
         print(f"Important: {important_value}")            
-        print("--------------------")
-    input("Press enter to continue...")
+        print(SEPARATOR)
+    pause()
 
 def read_notes():
     try:
-        with open("notes.txt", "r", encoding="utf-8") as file:
+        with open(NOTES_FILE, "r", encoding="utf-8") as file:
             return file.read()
     except FileNotFoundError:
         return ""
@@ -101,59 +107,66 @@ def add_notes():
     for line in lines:
         if line.startswith("ID:"):
             id_str = line.split(":", 1)[1].strip()
-            ids.append(int(id_str))
+            try:
+                ids.append(int(id_str))
+            except ValueError:
+                pass
+            
     if not ids:
         next_id = 1
     else:
         next_id = max(ids) + 1
     
-    note_block = f"ID: {next_id}\nDate: {date_value}\nNote: {note}\nImportant: {important}\n--------------------\n"
+    note_block = f"ID: {next_id}\nDate: {date_value}\nNote: {note}\nImportant: {important}\n{SEPARATOR}\n"
     with open("notes.txt", "a", encoding="utf-8") as file:
         file.write(note_block)
     print(f"Note added successfully (ID: {next_id}).")
-    input("Press enter to continue...")
+    pause()
 
 def delete_notes():
     data = read_notes()
     if data.strip() == "":
         print("There are no notes.")
-        input("Press enter to continue...")
+        pause()
         return
 
     delete_id = input("Enter the ID of the note to delete: ").strip()
     if not delete_id.isdigit():
         print("Please enter a valid numeric ID.")
-        input("Press enter to continue...")
+        pause()
         return
 
-    id_pattern = f"ID: {delete_id}"
-    blocks = data.split("--------------------")
-
+    blocks = data.split(SEPARATOR)
     kept_blocks = []
     found = False
 
     for block in blocks:
-        if block.strip() == "":
+        b = block.strip()
+        if not b:
             continue
-        if id_pattern in block:
+        first_line = b.splitlines()[0]  # očakávame "ID: X"
+        current_id = ""
+        if first_line.startswith("ID:"):
+            current_id = first_line.split(":", 1)[1].strip()
+        if current_id == delete_id:
             found = True
-            continue
-        kept_blocks.append(block.strip())
+            continue  # preskoč tento blok = zmaž
+        kept_blocks.append(b)
 
     if not found:
         print("Please enter a valid numeric ID.")
-        input("Press enter to continue...")
+        pause()
         return
 
     new_data = ""
     if kept_blocks:
-        new_data = "\n--------------------\n".join(kept_blocks) + "\n--------------------\n"
+        new_data = ("\n" + SEPARATOR + "\n").join(kept_blocks) + "\n" + SEPARATOR + "\n"
 
     with open("notes.txt", "w", encoding="utf-8") as file:
         file.write(new_data)
 
     print(f"Note with ID {delete_id} deleted successfully.")
-    input("Press enter to continue...")
+    pause()
 
 def main():
     while True:
