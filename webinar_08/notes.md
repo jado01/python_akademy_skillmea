@@ -71,7 +71,7 @@ for number in range(1, 12):
         break
     print(number)
 ```
-## omentáre
+## Komentáre
 Jednoriadkový komentár: začína znakom #
 Viacriadkový komentár: môžeme použiť trojité úvodzovky """ ... """
 

@@ -43,12 +43,12 @@
     ```python
     name = "Michal"
     for letter in name:
-        print(letter)
+        print(letter, end="")
     ```
     program vypise:
     Michal
     
-    - PodtrPodtržník "_" → zamlčaná premenná (keď ju nepotrebujem použiť).
+    - Podtržník "_" → zamlčaná premenná (keď ju nepotrebujem použiť).
     - range(start, stop) → generuje čísla v intervale <start, stop):
     ```python
     numbers = range(0, 11)
@@ -80,7 +80,7 @@
         counter += 1
     print("Doors are closed")
     ```
-**Zhrnutie a porovnanie cyklov**:
+**Zhrnutie a porovnanie cyklov:**
     🔹 Kedy použiť for cyklus:
         - keď vieš dopredu, koľkokrát sa má cyklus zopakovať
         - alebo keď chceš prejsť cez zoznam, string alebo iný iterovateľný objekt
