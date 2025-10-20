@@ -25,7 +25,7 @@ def get_choice():
         else:
             print("Neplatna volba, skus 1-4")
 
-def handle_list():
+def list_notes():
     print("--- Notes ---")
     data = read_notes()
     if data.strip() == "":
@@ -72,7 +72,7 @@ def read_notes():
     except FileNotFoundError:
         return ""
     
-def handle_add():
+def add_notes():
 
     while True:
         note = input("Add a note: ").strip()
@@ -113,7 +113,7 @@ def handle_add():
     print(f"Note added successfully (ID: {next_id}).")
     input("Press enter to continue...")
 
-def handle_delete():
+def delete_notes():
     data = read_notes()
     if data.strip() == "":
         print("There are no notes.")
@@ -161,11 +161,11 @@ def main():
         show_menu()
         choice = get_choice()
         if choice == "1":
-            handle_list()        
+            list_notes()        
         elif choice == "2":
-            handle_add()
+            add_notes()
         elif choice == "3":
-            handle_delete()
+            delete_notes()
         else:
             print("Good bye")
             break
