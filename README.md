@@ -1,4 +1,4 @@
-# python_akademy_skillmea
+# 🐍 Python Academy (Skillmea) – Learning Repository
 Vyuka python cez skillmea.sk
 # Tu budu pribudat postupne zadania a ich riesenie pocas procesu vyucby
 
@@ -26,3 +26,34 @@ Vyuka python cez skillmea.sk
 Pre prehľadnosť používam [Conventional Commits](CONTRIBUTING.md).
 
 ➡️ Pozri súbor [CONTRIBUTING.md](CONTRIBUTING.md), kde je ťahák commit prefixov (`feat`, `docs`, `chore`, ...).
+
+---
+
+## 🧩 Highlights
+
+### 🗒️ Project 01 – Simple Notes Manager
+A command-line application that allows users to:
+- Add, list, and delete notes  
+- Store notes in a text file  
+- Use menu navigation and screen clearing  
+- Demonstrate error handling and user input validation
+
+The project is part of the Python Academy course and my first complete mini application.
+
+➡️ [View project folder](./project_01_simple_notes_manager)
+
+---
+
+### 🧠 Sandbox – Finished Exercises
+A collection of short, functional Python programs created while learning and practicing.  
+Each script demonstrates a specific concept or topic, such as loops, functions, and error handling.
+
+Examples:
+- `mini_calculator.py` – calculator with functions and a dictionary of operations  
+- `uhadni_cislo-*.py` – number guessing games using conditions and loops  
+- `delenie_dvoch_cisel*.py`, `sucet_cisel.py`, `funkcie-sucet-troch-cisel.py`, etc.  
+
+➡️ [View sandbox folder](./sandbox)
+
+---
+
