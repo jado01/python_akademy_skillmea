@@ -10,7 +10,8 @@ def menu():
     print("3 - Odcitanie")
     print("4 - Nasobenie")
     print("5 - Delenie")
-    print("6 - Koniec")
+    print("6 - Historia vypoctov")
+    print("7 - Koniec")
     print("===================\n")
 
 def pozdrav():
@@ -52,18 +53,27 @@ def calculate(operator):
 def scitanie():
     result = calculate("+")
     print(f"\nSucet oboch cisel je: {result}\n")
+    history.append(f"Scitanie: {result}")
 
 def odcitanie():
     result = calculate("-")
     print(f"\nRozdiel oboch cisel je: {result}\n")
+    history.append(f"Odcitanie: {result}")
 
 def nasobenie():
     result = calculate("*")
     print(f"\nSucin oboch cisel je: {result}\n")
+    history.append(f"Nasobenie: {result}")
 
 def delenie():
     result = calculate("/")
     print(f"\nPodiel oboch cisel je: {result}\n")
+    history.append(f"Delenie: {result}")
+
+def historia():
+    for item in history:
+        print(item)
+
 
 options = {
     1 : pozdrav,
@@ -71,8 +81,11 @@ options = {
     3 : odcitanie,
     4 : nasobenie,
     5 : delenie,
-    6 : koniec
+    6 : historia,
+    7 : koniec
 }
+
+history = []
 
 while True:
     clear_terminal()
