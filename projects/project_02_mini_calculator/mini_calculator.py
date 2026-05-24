@@ -11,7 +11,8 @@ def menu():
     print("4 - Nasobenie")
     print("5 - Delenie")
     print("6 - Historia vypoctov")
-    print("7 - Koniec")
+    print("7 - Uloz historiu")
+    print("8 - Koniec")
     print("===================\n")
 
 def pozdrav():
@@ -74,6 +75,15 @@ def historia():
     for item in history:
         print(item)
 
+def uloz_historiu():
+    current_dir = os.path.dirname(__file__)
+    file_path = os.path.join(current_dir, "history.txt")
+
+    print(file_path)
+
+    with open(file_path, "w") as file:
+        for item in history:
+            file.write(item + "\n")
 
 options = {
     1 : pozdrav,
@@ -82,7 +92,8 @@ options = {
     4 : nasobenie,
     5 : delenie,
     6 : historia,
-    7 : koniec
+    7 : uloz_historiu,
+    8 : koniec
 }
 
 history = []
@@ -95,13 +106,13 @@ while True:
         volba = int(input("Zadaj volbu: "))
         if volba in options:
             options[volba]()
-            if volba == 6:
+            if volba == 8:
                 break
             else:
                 input("Stlac Enter pre pokracovanie ...")
         else:
-            print("\nZadaj volbu 1 az 6\n")
+            print("\nZadaj volbu 1 az 8\n")
             input("Stlac Enter pre pokracovanie ...")
     except ValueError:
-        print('\nZadal si nepovoleny znak. Zadaj hodnotu "1" az "6"\n')
+        print('\nZadal si nepovoleny znak. Zadaj hodnotu "1" az "8"\n')
         input("Stlac Enter pre pokracovanie ...")
