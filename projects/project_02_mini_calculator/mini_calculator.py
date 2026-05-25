@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 def clear_terminal():
     os.system("cls")
@@ -11,7 +12,8 @@ def menu():
 4 - Division
 5 - Show history
 6 - Save history
-7 - Quit
+7 - Clear history
+8 - Quit
 ====================\n""")
 
 def quit_program():
@@ -49,35 +51,56 @@ def calculate(operator):
             
 def addition():
     result = calculate("+")
+    timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     print(f"\nThe sum of both numbers is: {result}\n")
-    history.append(f"Addition: {result}")
+    history.append(f"[{timestamp}] Addition: {result}")
 
 def subtraction():
     result = calculate("-")
+    timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     print(f"\nThe difference between both numbers is: {result}\n")
-    history.append(f"Subtraction: {result}")
+    history.append(f"[{timestamp}] Subtraction: {result}")
 
 def multiplication():
     result = calculate("*")
+    timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     print(f"\nThe product of both numbers is: {result}\n")
-    history.append(f"Multiplication: {result}")
+    history.append(f"[{timestamp}] Multiplication: {result}")
 
 def division():
     result = calculate("/")
+    timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     print(f"\nThe quotient of both numbers is: {result}\n")
-    history.append(f"Division: {result}")
+    history.append(f"[{timestamp}] Division: {result}")
 
 def show_history():
-    for item in history:
-        print(item)
+    if not history:
+        print("No history yet")
+    else:
+        for item in history:
+            print(item)
 
 def save_history():
-    current_dir = os.path.dirname(__file__)
-    file_path = os.path.join(current_dir, "history.txt")
+    if not history:
+        print("Nothing to save")
 
-    with open(file_path, "w") as file:
-        for item in history:
-            file.write(item + "\n")
+    else:
+        current_dir = os.path.dirname(__file__)
+        file_path = os.path.join(current_dir, "history.txt")
+
+        with open(file_path, "a") as file:
+            for item in history:
+                file.write(item + "\n")
+
+        history.clear()
+        print("\nHistory saved!\n")
+
+def clear_history():
+    if not history:
+        print("No history to clear")
+    else:
+        history.clear()
+        print("History cleared") 
 
 options = {
     1 : addition,
@@ -86,7 +109,8 @@ options = {
     4 : division,
     5 : show_history,
     6 : save_history,
-    7 : quit_program
+    7 : clear_history,
+    8 : quit_program
 }
 
 history = []
@@ -99,13 +123,13 @@ while True:
         choice = int(input("Enter your choice: "))
         if choice in options:
             options[choice]()
-            if choice == 7:
+            if choice == 8:
                 break
             else:
                 input("Press Enter to continue ...")
         else:
-            print("\nEnter a number from 1 to 7: \n")
+            print("\nEnter a number from 1 to 8: \n")
             input("Press Enter to continue ...")
     except ValueError:
-        print('\nInvalid input. Enter a value from 1 to 7:\n')
+        print('\nInvalid input. Enter a value from 1 to 8:\n')
         input("Press Enter to continue ...")
