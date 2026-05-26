@@ -5,7 +5,7 @@ def clear_terminal():
     os.system("cls")
 
 def menu():
-    print("""==== Main menu ====
+    print("""===== Main menu =====
 1 - Addition
 2 - Subtraction
 3 - Multiplication
@@ -13,8 +13,9 @@ def menu():
 5 - Show history
 6 - Save history
 7 - Clear history
-8 - Quit
-====================\n""")
+8 - Show saved history
+9 - Quit
+======================\n""")
 
 def quit_program():
     print("\nGoodbye\n")
@@ -100,7 +101,17 @@ def clear_history():
         print("No history to clear")
     else:
         history.clear()
-        print("History cleared") 
+        print("History cleared")
+
+def show_saved_history():
+    current_dir = os.path.dirname(__file__)
+    file_path = os.path.join(current_dir, "history.txt")
+
+    with open(file_path, "r") as file:
+        lines = file.readlines()
+        for item in lines:
+            print(item, end="")
+
 
 options = {
     1 : addition,
@@ -110,7 +121,8 @@ options = {
     5 : show_history,
     6 : save_history,
     7 : clear_history,
-    8 : quit_program
+    8 : show_saved_history,
+    9 : quit_program
 }
 
 history = []
@@ -123,13 +135,14 @@ while True:
         choice = int(input("Enter your choice: "))
         if choice in options:
             options[choice]()
-            if choice == 8:
+            if choice == 9:
                 break
             else:
                 input("Press Enter to continue ...")
         else:
-            print("\nEnter a number from 1 to 8: \n")
+            print("\nEnter a number from 1 to 9: \n")
             input("Press Enter to continue ...")
     except ValueError:
-        print('\nInvalid input. Enter a value from 1 to 8:\n')
+        print('\nInvalid input. Enter a value from 1 to 9:\n')
         input("Press Enter to continue ...")
+
