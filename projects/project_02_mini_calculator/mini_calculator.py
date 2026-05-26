@@ -38,41 +38,45 @@ def calculate(operator):
             if number2 == 0:
                 print("\nCannot divide by zero. Enter the second number again.\n")
             else:
-                return number1 / number2
+                result =  number1 / number2
+                return number1, number2, result
             
     else:
         number2 = get_number("Enter the second number: ")
 
         if operator == "+":
-            return number1 + number2
+            result = number1 + number2
+            return number1, number2, result
         elif operator == "-":
-            return number1 - number2
+            result = number1 - number2
+            return number1, number2, result
         elif operator == "*":
-            return number1 * number2
+            result = number1 * number2
+            return number1, number2, result
             
 def addition():
-    result = calculate("+")
+    number1, number2, result = calculate("+")
     timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     print(f"\nThe sum of both numbers is: {result}\n")
-    history.append(f"[{timestamp}] Addition: {result}")
+    history.append(f"[{timestamp}] {number1} + {number2} = {result}")
 
 def subtraction():
-    result = calculate("-")
+    number1, number2, result = calculate("-")
     timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     print(f"\nThe difference between both numbers is: {result}\n")
-    history.append(f"[{timestamp}] Subtraction: {result}")
+    history.append(f"[{timestamp}] {number1} - {number2} = {result}")
 
 def multiplication():
-    result = calculate("*")
+    number1, number2, result = calculate("*")
     timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     print(f"\nThe product of both numbers is: {result}\n")
-    history.append(f"[{timestamp}] Multiplication: {result}")
+    history.append(f"[{timestamp}] {number1} * {number2} = {result}")
 
 def division():
-    result = calculate("/")
+    number1, number2, result = calculate("/")
     timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     print(f"\nThe quotient of both numbers is: {result}\n")
-    history.append(f"[{timestamp}] Division: {result}")
+    history.append(f"[{timestamp}] {number1} / {number2} = {result}")
 
 def show_history():
     if not history:
@@ -107,10 +111,13 @@ def show_saved_history():
     current_dir = os.path.dirname(__file__)
     file_path = os.path.join(current_dir, "history.txt")
 
-    with open(file_path, "r") as file:
-        lines = file.readlines()
-        for item in lines:
-            print(item, end="")
+    try:
+        with open(file_path, "r") as file:
+            lines = file.readlines()
+            for item in lines:
+                print(item, end="")
+    except FileNotFoundError:
+        print("No saved history found")
 
 
 options = {
