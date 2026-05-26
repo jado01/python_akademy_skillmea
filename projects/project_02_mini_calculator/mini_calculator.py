@@ -1,6 +1,8 @@
 import os
 from datetime import datetime
 
+QUIT_OPTION = 9
+
 def clear_terminal():
     os.system("cls")
 
@@ -39,44 +41,35 @@ def calculate(operator):
                 print("\nCannot divide by zero. Enter the second number again.\n")
             else:
                 result =  number1 / number2
-                return number1, number2, result
-            
+                return number1, number2, result                            
     else:
         number2 = get_number("Enter the second number: ")
 
         if operator == "+":
-            result = number1 + number2
-            return number1, number2, result
+            result = number1 + number2            
         elif operator == "-":
-            result = number1 - number2
-            return number1, number2, result
+            result = number1 - number2            
         elif operator == "*":
             result = number1 * number2
-            return number1, number2, result
+    return number1, number2, result
+            
+def run_operation(operator, result_message):
+    number1, number2, result = calculate(operator)
+    timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
+    print(f"\n{result_message}: {result}\n")
+    history.append(f"[{timestamp}] {number1} {operator} {number2} = {result}")
             
 def addition():
-    number1, number2, result = calculate("+")
-    timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
-    print(f"\nThe sum of both numbers is: {result}\n")
-    history.append(f"[{timestamp}] {number1} + {number2} = {result}")
+    run_operation("+", "The sum of both numbers is")
 
 def subtraction():
-    number1, number2, result = calculate("-")
-    timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
-    print(f"\nThe difference between both numbers is: {result}\n")
-    history.append(f"[{timestamp}] {number1} - {number2} = {result}")
+    run_operation("-", "The difference between both numbers is")
 
 def multiplication():
-    number1, number2, result = calculate("*")
-    timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
-    print(f"\nThe product of both numbers is: {result}\n")
-    history.append(f"[{timestamp}] {number1} * {number2} = {result}")
+    run_operation("*", "The product of both numbers is")
 
 def division():
-    number1, number2, result = calculate("/")
-    timestamp = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
-    print(f"\nThe quotient of both numbers is: {result}\n")
-    history.append(f"[{timestamp}] {number1} / {number2} = {result}")
+    run_operation("/", "The quotient of both numbers is")
 
 def show_history():
     if not history:
@@ -85,13 +78,17 @@ def show_history():
         for item in history:
             print(item)
 
+def get_history_path():
+    current_dir = os.path.dirname(__file__)
+    file_path = os.path.join(current_dir, "history.txt")
+    return file_path
+
 def save_history():
     if not history:
         print("Nothing to save")
 
     else:
-        current_dir = os.path.dirname(__file__)
-        file_path = os.path.join(current_dir, "history.txt")
+        file_path = get_history_path()
 
         with open(file_path, "a") as file:
             for item in history:
@@ -108,8 +105,7 @@ def clear_history():
         print("History cleared")
 
 def show_saved_history():
-    current_dir = os.path.dirname(__file__)
-    file_path = os.path.join(current_dir, "history.txt")
+    file_path = get_history_path()
 
     try:
         with open(file_path, "r") as file:
@@ -142,7 +138,7 @@ while True:
         choice = int(input("Enter your choice: "))
         if choice in options:
             options[choice]()
-            if choice == 9:
+            if choice == QUIT_OPTION:
                 break
             else:
                 input("Press Enter to continue ...")
