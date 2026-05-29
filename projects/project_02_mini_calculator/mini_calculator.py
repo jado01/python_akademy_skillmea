@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 
 QUIT_OPTION = 9
+HISTORY_FILE = "history.txt"
 
 def clear_terminal():
     os.system("cls")
@@ -22,6 +23,9 @@ def menu():
 def quit_program():
     print("\nGoodbye\n")
 
+def pause():
+    input("Press Enter to continue ...")
+
 def get_number(text):
     while True:
         try:
@@ -32,25 +36,20 @@ def get_number(text):
 
 def calculate(operator):
     number1 = get_number("\nEnter the first number: ")
-    
-    if operator == "/":
-        while True:
-            number2 = get_number("Enter the second number: ")
+    number2 = get_number("Enter the second number: ")
 
-            if number2 == 0:
-                print("\nCannot divide by zero. Enter the second number again.\n")
-            else:
-                result =  number1 / number2
-                return number1, number2, result                            
-    else:
+    while operator == "/" and number2 == 0:
+        print("Cannot divide by zero...")
         number2 = get_number("Enter the second number: ")
-
-        if operator == "+":
-            result = number1 + number2            
-        elif operator == "-":
-            result = number1 - number2            
-        elif operator == "*":
-            result = number1 * number2
+                      
+    if operator == "+":
+        result = number1 + number2            
+    elif operator == "-":
+        result = number1 - number2            
+    elif operator == "*":
+        result = number1 * number2
+    elif operator == "/":
+        result = number1 / number2
     return number1, number2, result
             
 def run_operation(operator, result_message):
@@ -80,7 +79,7 @@ def show_history():
 
 def get_history_path():
     current_dir = os.path.dirname(__file__)
-    file_path = os.path.join(current_dir, "history.txt")
+    file_path = os.path.join(current_dir, HISTORY_FILE)
     return file_path
 
 def save_history():
@@ -141,11 +140,11 @@ while True:
             if choice == QUIT_OPTION:
                 break
             else:
-                input("Press Enter to continue ...")
+                pause()
         else:
             print("\nEnter a number from 1 to 9: \n")
-            input("Press Enter to continue ...")
+            pause()
     except ValueError:
         print('\nInvalid input. Enter a value from 1 to 9:\n')
-        input("Press Enter to continue ...")
+        pause()
 
