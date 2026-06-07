@@ -32,21 +32,25 @@ options = {
     9 : quit_program
 }
 
-while True:
-    clear_terminal()
-    menu()
-    
-    try:
-        choice = int(input("Enter your choice: "))
-        if choice in options:
-            options[choice]()
-            if choice == QUIT_OPTION:
-                break
+def main():
+    while True:
+        clear_terminal()
+        menu()
+        
+        try:
+            choice = int(input("Enter your choice: "))
+            if choice in options:
+                options[choice]()
+                if choice == QUIT_OPTION:
+                    break
+                else:
+                    pause()
             else:
+                print("\nEnter a number from 1 to 9: \n")
                 pause()
-        else:
-            print("\nEnter a number from 1 to 9: \n")
+        except ValueError:
+            print('\nInvalid input. Enter a value from 1 to 9:\n')
             pause()
-    except ValueError:
-        print('\nInvalid input. Enter a value from 1 to 9:\n')
-        pause()
+
+if __name__ == "__main__":
+    main()
