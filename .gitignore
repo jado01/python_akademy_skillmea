@@ -2,3 +2,6 @@ test.py
 data.txt
 test2.py
 data2.txt
+__pycache__/
+*.pyc
+history.txt

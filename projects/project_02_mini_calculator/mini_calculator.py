@@ -1,11 +1,9 @@
 import os
 from datetime import datetime
+from utils import clear_terminal, pause, get_number
 
 QUIT_OPTION = 9
 HISTORY_FILE = "history.txt"
-
-def clear_terminal():
-    os.system("cls")
 
 def menu():
     print("""===== Main menu =====
@@ -22,17 +20,6 @@ def menu():
 
 def quit_program():
     print("\nGoodbye\n")
-
-def pause():
-    input("Press Enter to continue ...")
-
-def get_number(text):
-    while True:
-        try:
-            number = float(input(text))
-            return number
-        except ValueError:
-            print("\nThis is not a number! Please try again.\n")
 
 def calculate(operator):
     number1 = get_number("\nEnter the first number: ")
