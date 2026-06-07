@@ -1,9 +1,9 @@
-import os
 from datetime import datetime
 from utils import clear_terminal, pause, get_number
+from history import show_history, save_history, clear_history, show_saved_history
+from history import history
 
 QUIT_OPTION = 9
-HISTORY_FILE = "history.txt"
 
 def menu():
     print("""===== Main menu =====
@@ -57,51 +57,6 @@ def multiplication():
 def division():
     run_operation("/", "The quotient of both numbers is")
 
-def show_history():
-    if not history:
-        print("No history yet")
-    else:
-        for item in history:
-            print(item)
-
-def get_history_path():
-    current_dir = os.path.dirname(__file__)
-    file_path = os.path.join(current_dir, HISTORY_FILE)
-    return file_path
-
-def save_history():
-    if not history:
-        print("Nothing to save")
-
-    else:
-        file_path = get_history_path()
-
-        with open(file_path, "a") as file:
-            for item in history:
-                file.write(item + "\n")
-
-        history.clear()
-        print("\nHistory saved!\n")
-
-def clear_history():
-    if not history:
-        print("No history to clear")
-    else:
-        history.clear()
-        print("History cleared")
-
-def show_saved_history():
-    file_path = get_history_path()
-
-    try:
-        with open(file_path, "r") as file:
-            lines = file.readlines()
-            for item in lines:
-                print(item, end="")
-    except FileNotFoundError:
-        print("No saved history found")
-
-
 options = {
     1 : addition,
     2 : subtraction,
@@ -113,8 +68,6 @@ options = {
     8 : show_saved_history,
     9 : quit_program
 }
-
-history = []
 
 while True:
     clear_terminal()
