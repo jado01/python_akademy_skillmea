@@ -19,7 +19,16 @@ def get_choice():
     return choice
 
 def list_notes():
-    pass
+    try:
+        with open(NOTES_FILE, "r", encoding="utf-8") as file:
+            content = file.read()
+            if content:
+                print(content)
+            else:
+                print("No notes found")
+    except FileNotFoundError:
+        print("No notes found!")
+
 
 def add_note():
     while True:
