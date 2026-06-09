@@ -1,10 +1,10 @@
 ID: 1
 Date: 2026-06-09
-Note: skuska
-Important: No
+Note: kupit jedlo
+Important: Yes
 --------------------
-ID: 1
+ID: 2
 Date: 2026-06-09
-Note: skuska 2
-Important: No
+Note: najest sa
+Important: Yes
 --------------------

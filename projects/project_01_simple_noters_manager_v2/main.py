@@ -1,6 +1,6 @@
 from datetime import date
 
-NOTES_FILE = "notes.txt_v2"
+NOTES_FILE = "notes_v2.txt"
 SEPARATOR = "--------------------"
 
 def show_menu():
@@ -50,7 +50,7 @@ def add_note():
             print('Please enter "Yes" or "No"!')
     date_value = date.today()
 
-    next_id = 1
+    next_id = get_next_id()
 
     note_block = f"ID: {next_id}\nDate: {date_value}\nNote: {note}\nImportant: {important}\n{SEPARATOR}\n"
 
@@ -58,6 +58,23 @@ def add_note():
         file.write(note_block)
 
     print(note_block)
+
+def get_next_id():
+    try:
+        with open(NOTES_FILE, "r", encoding="utf-8") as file:
+            content = file.read()
+            if not content:
+                return 1
+            lines = content.splitlines()
+
+        for line in lines:
+            if line.startswith("ID:"):
+                ids = line
+        last_id = ids.split()
+        next_id = int(last_id[1]) + 1
+        return next_id
+    except FileNotFoundError:
+        return 1            
 
 def delete_note():
     pass
