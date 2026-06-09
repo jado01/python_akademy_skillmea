@@ -1,4 +1,7 @@
-NOTES_FILE = "notes.txt"
+from datetime import date
+
+NOTES_FILE = "notes.txt_v2"
+SEPARATOR = "--------------------"
 
 def show_menu():
     print("""
@@ -19,7 +22,33 @@ def list_notes():
     pass
 
 def add_note():
-    pass
+    while True:
+        note = input("Add a note: ").strip()
+        if note != "":
+            break
+        else:
+            print("Note can`t by empty!")
+    
+    while True:
+        important = input("Is this note important? ").strip().lower()
+        if important in ("yes", "y"):
+            important = "Yes"    
+            break
+        if  important in ("no", "n"):
+            important = "No"
+            break
+        else:
+            print('Please enter "Yes" or "No"!')
+    date_value = date.today()
+
+    next_id = 1
+
+    note_block = f"ID: {next_id}\nDate: {date_value}\nNote: {note}\nImportant: {important}\n{SEPARATOR}\n"
+
+    with open(NOTES_FILE, "a", encoding="utf-8") as file:
+        file.write(note_block)
+
+    print(note_block)
 
 def delete_note():
     pass
