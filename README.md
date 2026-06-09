@@ -18,7 +18,7 @@ Vyuka python cez skillmea.sk
 | 10 | 2025-09-17  | Tuples, funkcie, scope                | [webinar_10](webinar_10/) | Mutable vs immutable, default parametre |
 | 11 | 2025-09-18  | Dictionaries                          | [webinar_11](webinar_11/) | Základné operácie, get, iterovanie |
 | 12 | 2025-09-22  | Exceptions - vynimky, praca so subormi| [webinar_12](webinar_12/) |          |
-| 13 | 2025-09-24  |                                       | [webinar_13](webinar_13/) |          |
+| 13 | 2025-09-24  | Práca so súbormi, moduly              | [webinar_13](webinar_13/) |          |
 ---
 
 ## 📖 Commit štýl a príspevky
