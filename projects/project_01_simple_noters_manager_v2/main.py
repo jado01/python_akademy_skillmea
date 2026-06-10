@@ -77,7 +77,38 @@ def get_next_id():
         return 1            
 
 def delete_note():
-    pass
+    try:
+        with open(NOTES_FILE, "r", encoding="utf-8") as file:
+            content = file.read()
+            if content:
+                notes = content.split(SEPARATOR)
+                while True:
+                    note_id = input("Enter note ID: ").strip()
+                    remaining_notes = []
+                    found = False
+                    if note_id == "":
+                        print("Please enter note ID. ")
+                    elif not note_id.isdigit():
+                        print("Please enter a valid numeric ID. ")
+                    else:
+                        for note in notes:
+                            if f"ID: {note_id}" in note:
+                                found = True
+                            else:
+                                remaining_notes.append(note)
+                        if not found:
+                            print("No note with this ID found.")
+                            return
+                        if found:
+                            with open(NOTES_FILE, "w", encoding="utf-8") as file:
+                                file.write(SEPARATOR.join(remaining_notes))
+                            print("Note deleted successfully")
+                            return
+                                    
+            else:
+                print("No notes found")
+    except FileNotFoundError:
+        print("No notes found")
 
 
 def main():
