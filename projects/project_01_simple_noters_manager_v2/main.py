@@ -1,7 +1,14 @@
+import os
 from datetime import date
 
 NOTES_FILE = "notes_v2.txt"
 SEPARATOR = "--------------------"
+
+def clear_terminal():
+    os.system("cls" if os.name == "nt" else "clear")
+
+def pause():
+    input("Press enter to continue ...")
 
 def show_menu():
     print("""
@@ -28,6 +35,7 @@ def list_notes():
                 print("No notes found")
     except FileNotFoundError:
         print("No notes found!")
+    pause()
 
 
 def add_note():
@@ -57,7 +65,10 @@ def add_note():
     with open(NOTES_FILE, "a", encoding="utf-8") as file:
         file.write(note_block)
 
+    print(f"\nYour added note is:\n{SEPARATOR}")
     print(note_block)
+    print("Note added successfully\n")
+    pause()
 
 def get_next_id():
     try:
@@ -97,12 +108,14 @@ def delete_note():
                             else:
                                 remaining_notes.append(note)
                         if not found:
-                            print("No note with this ID found.")
+                            print("\nNo note with this ID found.\n")
+                            pause()
                             return
                         if found:
                             with open(NOTES_FILE, "w", encoding="utf-8") as file:
                                 file.write(SEPARATOR.join(remaining_notes))
-                            print("Note deleted successfully")
+                            print("\nNote deleted successfully\n")
+                            pause()
                             return
                                     
             else:
@@ -113,6 +126,7 @@ def delete_note():
 
 def main():
     while True:
+        clear_terminal()
         show_menu()
         choice = get_choice()
         if choice == "1":
@@ -125,7 +139,8 @@ def main():
             print("Goodbey")
             break
         else:
-            print("Invalid option. Please choose 1-4.")
+            print("\nInvalid option. Please choose 1-4.\n")
+            pause()
 
 
 if __name__ == "__main__":
