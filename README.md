@@ -19,7 +19,8 @@ Vyuka python cez skillmea.sk
 | 11 | 2025-09-18  | Dictionaries                          | [webinar_11](webinar_11/) | Základné operácie, get, iterovanie |
 | 12 | 2025-09-22  | Exceptions - vynimky, praca so subormi| [webinar_12](webinar_12/) |          |
 | 13 | 2025-09-24  | Práca so súbormi, moduly              | [webinar_13](webinar_13/) |          |
-| 14 | 2025-09-29  | Modules, Packages and Library         | [webinar_14](webinar_14/) |imports, aliases, packages, __name__, os library, PyPI and PIP basics |   
+| 14 | 2025-09-29  | Modules, Packages and Library         | [webinar_14](webinar_14/) |imports, aliases, packages, __name__, os library, PyPI and PIP basics |
+| 15 | 2025-10-01  | Kontrola zadani projektu              | [webinar_15](webinar_15/) |          |
 ---
 
 ## 📖 Commit štýl a príspevky
