@@ -47,6 +47,14 @@ For me, this project is both a practical application and a long-term learning pl
 * [ ] Statistics (number of notes)
 * [ ] Modular structure (notes.py, utils.py, constants.py)
 
+## Roadmap
+
+- v2.1 - Cancel option
+- v2.2 - Show Important Notes
+- v2.3 - Search Note
+- v2.4 - Edit Note
+- v3.0 - JSON storage
+
 ## Learning Goals
 
 This project is part of my Python learning journey. The goal is to practice:
