@@ -12,17 +12,17 @@ def pause():
 
 def show_menu():
     print("""
-====================
-Simple Notes Manager
-====================
-1. List Notes
-2. Add a Note
-3. Delete a Note
-4. Exit
+===========================
+📃 Simple Notes Manager 📃
+===========================
+1️⃣  List Notes
+2️⃣  Add a Note
+3️⃣  Delete a Note
+4️⃣  Exit
           """)
     
 def get_choice():
-    choice = input("Please enter the number: ").strip()
+    choice = input("Please enter the number (1-4): ").strip()
     return choice
 
 def list_notes():
@@ -32,19 +32,19 @@ def list_notes():
             if content:
                 print(content)
             else:
-                print("No notes found")
+                print("❌  No notes found")
     except FileNotFoundError:
-        print("No notes found!")
+        print("❌  No notes found!")
     pause()
 
 
 def add_note():
     while True:
-        note = input("Add a note: ").strip()
+        note = input("📝  Add a note: ").strip()
         if note != "":
             break
         else:
-            print("Note can't by empty!")
+            print("⚠️  Note can't by empty!")
     
     while True:
         important = input("Is this note important? ").strip().lower()
@@ -55,7 +55,7 @@ def add_note():
             important = "No"
             break
         else:
-            print('Please enter "Yes" or "No"!')
+            print('⚠️ Please enter "Yes" or "No"!')
     date_value = date.today()
 
     next_id = get_next_id()
@@ -67,7 +67,7 @@ def add_note():
 
     print(f"\nYour added note is:\n{SEPARATOR}")
     print(note_block)
-    print("Note added successfully\n")
+    print("✅  Note added successfully\n")
     pause()
 
 def get_next_id():
@@ -100,7 +100,7 @@ def delete_note():
                     if note_id == "":
                         print("Please enter note ID. ")
                     elif not note_id.isdigit():
-                        print("Please enter a valid numeric ID. ")
+                        print("⚠️  Please enter a valid numeric ID. ")
                     else:
                         for note in notes:
                             if f"ID: {note_id}" in note:
@@ -113,15 +113,16 @@ def delete_note():
                             return
                         with open(NOTES_FILE, "w", encoding="utf-8") as file:
                             file.write(SEPARATOR.join(remaining_notes))
-                        print("\nNote deleted successfully\n")
+                        print("\n✅  Note deleted successfully\n")
                         pause()
                         return
                                     
             else:
-                print("No notes found")
+                print("❌  No notes found")
                 pause()
     except FileNotFoundError:
-        print("No notes found")
+        print("❌  No notes found")
+        pause()
 
 
 def main():
@@ -136,10 +137,10 @@ def main():
         elif choice == "3":
             delete_note()
         elif choice == "4":
-            print("Goodbye")
+            print("👋 Goodbye!")
             break
         else:
-            print("\nInvalid option. Please choose 1-4.\n")
+            print("\n⚠️  Invalid option. Please choose 1-4.\n")
             pause()
 
 
