@@ -1,14 +1,24 @@
 # TODO Learning
 
-## Python Projects
-- [ ] Mini calculator
-- [ ] To-Do App
+## Next Projects
 - [ ] Password Generator
-- [ ] MQTT Logger
-- [ ] Home Assistant Helper
+- [ ] To-Do App
+- [ ] File Organizer
+- [ ] Job Search Agent
+- [ ] Garage Search Agent
+
+## Notes Manager Backlog
+- [ ] Cancel option
+- [ ] Show Important Notes
+- [ ] Search Note
+- [ ] Edit Note
+- [ ] JSON storage
 
 ## Python Topics
 - [ ] Dictionaries
 - [ ] JSON
 - [ ] File handling
 - [ ] Classes (OOP)
+- [ ] Pandas
+- [ ] APIs
+- [ ] Web Scraping
