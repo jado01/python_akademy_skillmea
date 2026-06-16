@@ -29,8 +29,8 @@ def list_notes():
     try:
         with open(NOTES_FILE, "r", encoding="utf-8") as file:
             content = file.read()
-            if content:
-                print(content)
+            if "ID:" in content:
+                print(content.strip())
             else:
                 print("❌  No notes found")
     except FileNotFoundError:
@@ -71,6 +71,8 @@ def add_note():
     pause()
 
 def get_next_id():
+    ids = None
+
     try:
         with open(NOTES_FILE, "r", encoding="utf-8") as file:
             content = file.read()
@@ -81,17 +83,21 @@ def get_next_id():
         for line in lines:
             if line.startswith("ID:"):
                 ids = line
+        
+        if ids is None:
+            return 1
+        
         last_id = ids.split()
         next_id = int(last_id[1]) + 1
         return next_id
     except FileNotFoundError:
         return 1            
-
+    
 def delete_note():
     try:
         with open(NOTES_FILE, "r", encoding="utf-8") as file:
             content = file.read()
-            if content:
+            if "ID:" in content:
                 notes = content.split(SEPARATOR)
                 while True:
                     note_id = input("Enter note ID: ").strip()
@@ -106,13 +112,17 @@ def delete_note():
                             if f"ID: {note_id}" in note:
                                 found = True
                             else:
-                                remaining_notes.append(note)
+                                if note.strip():
+                                    remaining_notes.append(note)
                         if not found:
                             print("\nNo note with this ID found.\n")
                             pause()
                             return
                         with open(NOTES_FILE, "w", encoding="utf-8") as file:
-                            file.write(SEPARATOR.join(remaining_notes))
+                            if remaining_notes:
+                                file.write(SEPARATOR.join(remaining_notes) + SEPARATOR + "\n")
+                            else:
+                                file.write("")
                         print("\n✅  Note deleted successfully\n")
                         pause()
                         return
