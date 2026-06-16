@@ -22,7 +22,7 @@ Simple Notes Manager
           """)
     
 def get_choice():
-    choice = input("Please enter the number: ")
+    choice = input("Please enter the number: ").strip()
     return choice
 
 def list_notes():
@@ -44,7 +44,7 @@ def add_note():
         if note != "":
             break
         else:
-            print("Note can`t by empty!")
+            print("Note can't by empty!")
     
     while True:
         important = input("Is this note important? ").strip().lower()
@@ -111,15 +111,15 @@ def delete_note():
                             print("\nNo note with this ID found.\n")
                             pause()
                             return
-                        if found:
-                            with open(NOTES_FILE, "w", encoding="utf-8") as file:
-                                file.write(SEPARATOR.join(remaining_notes))
-                            print("\nNote deleted successfully\n")
-                            pause()
-                            return
+                        with open(NOTES_FILE, "w", encoding="utf-8") as file:
+                            file.write(SEPARATOR.join(remaining_notes))
+                        print("\nNote deleted successfully\n")
+                        pause()
+                        return
                                     
             else:
                 print("No notes found")
+                pause()
     except FileNotFoundError:
         print("No notes found")
 
@@ -136,7 +136,7 @@ def main():
         elif choice == "3":
             delete_note()
         elif choice == "4":
-            print("Goodbey")
+            print("Goodbye")
             break
         else:
             print("\nInvalid option. Please choose 1-4.\n")
