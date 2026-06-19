@@ -1,40 +1,68 @@
-import os
-import random
-
-LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
-UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-NUMBERS = "0123456789"
-SPECIAL = "!@#$%^&*()-_=+[]{};:,.<>?/|\\"
+import os, random, string
 
 def clear_terminal():
     os.system("cls" if os.name == "nt" else "clear")
 
+def ask_yes_no(question):
+    while True:
+        choice = input(question).strip().lower()
+        if choice in ("y", "n"):
+            return choice
+        else:
+            print("Invalid input! Please try again.")
+
 def get_password_options():
-    pwd_lenght = int(input("Enter password lenght: "))
-    lowercase = input("Lowercase letters? ('y' or 'n'): ")
-    uppercase = input("Uppercase letters? ('y' or 'n'): ")
-    numbers = input("Numbers? ('y' or 'n'): ")
-    special_characters = input("Special characters? : ('y' or 'n'): ")
-    options = {"pwd_lenght": pwd_lenght, "lowercase": lowercase, "uppercase": uppercase, "numbers": numbers, "specials": special_characters}
-    return options
+    while True:
+        try:
+            pwd_length = int(input("Enter password length: "))
+            if pwd_length < 6:
+                print("Password length must be at least 6 characters! Please try again.")
+            elif pwd_length > 32:
+                print("Maximum length must be 32 characters! Please try again.")
+            else:
+                break
+        except ValueError:
+            print("Please enter a valid password length!")
+
+    while True:
+        lowercase = ask_yes_no("Lowercase letters? (y/n): ")
+        uppercase = ask_yes_no("Uppercase letters? (y/n): ")
+        numbers = ask_yes_no("Numbers? (y/n): ")
+        special_characters = ask_yes_no("Special characters? : (y/n): ")
+
+        options = {"pwd_length": pwd_length, "lowercase": lowercase, "uppercase": uppercase, "numbers": numbers, "specials": special_characters}
+        
+        if lowercase == "n" and uppercase == "n" and numbers == "n" and special_characters == "n":
+            print("All options can't be 'n'! Please try again")
+        else:
+            return options
 
 def generate_password(data):
     characters = ""
-    pwd = ""
+    password_chars = []
 
     if data["lowercase"] == "y":
-        characters += LOWERCASE
+        characters += string.ascii_lowercase
+        password_chars.append(random.choice(string.ascii_lowercase))
     if data["uppercase"] == "y":
-        characters += UPPERCASE
+        characters += string.ascii_uppercase
+        password_chars.append(random.choice(string.ascii_uppercase))
     if data["numbers"] == "y":
-        characters += NUMBERS
+        characters += string.digits
+        password_chars.append(random.choice(string.digits))
     if data["specials"] == "y":
-        characters += SPECIAL
+        characters += string.punctuation
+        password_chars.append(random.choice(string.punctuation))
 
-    for _ in range(0, data["pwd_lenght"]):
-        pwd += random.choice(characters)
+    remaining_length = data["pwd_length"] - len(password_chars)
+
+    for _ in range(remaining_length):
+        password_chars.append(random.choice(characters))
     
-    return pwd
+    random.shuffle(password_chars)
+    password = "".join(password_chars)
+  
+    return password
 
 def main():
     clear_terminal()
@@ -51,15 +79,12 @@ Password Generator
         if choice == "1":
             options = get_password_options()
             pwd = generate_password(options)
-            print(f" Your password is: {pwd}")
+            print(f"Your password is: {pwd}")
 
         elif choice == "2":
             break
         else:
             print("Invalid input. Please choose 1 or 2")
         
-
-
 if __name__ == "__main__":
     main()
-    
