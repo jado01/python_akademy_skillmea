@@ -1,3 +1,4 @@
+from datetime import date
 class Note():
     def __init__(self, note_id, date, note, important):
         self.note_id = note_id
@@ -20,7 +21,15 @@ class NoteManager():
 
     def add_note(self, note):
         self.notes.append(note)
+    
+    def create_note(self, note, important):
+        new_id = self.get_next_id()
+        current_date = date.today()
 
+        new_note = Note(new_id, current_date, note, important)
+
+        self.add_note(new_note)
+        
     def list_note(self):
         for note in self.notes:
             note.display()
@@ -53,18 +62,9 @@ class NoteManager():
             new_id += 1
         return new_id
 
-note1 = Note(1, "2026-06-22", "kupit mlieko", True)
-note2 = Note(2, "2026-06-22", "kupit chlieb", False)
-
 manager = NoteManager()
 
-manager.add_note(note1)
-manager.add_note(note2)
+manager.create_note("kupit mlieko", True)
+manager.create_note("kupit chlieb", False)
 
 manager.list_note()
-
-manager.delete_note(1)
-
-manager.list_note()
-
-print(manager.get_next_id())
