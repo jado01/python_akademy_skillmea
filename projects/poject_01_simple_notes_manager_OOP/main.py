@@ -1,3 +1,4 @@
+import os
 from datetime import date
 class Note():
     def __init__(self, note_id, date, note, important):
@@ -62,9 +63,53 @@ class NoteManager():
             new_id += 1
         return new_id
 
-manager = NoteManager()
+def clear_terminal():
+    os.system("cls" if os.name == "nt" else "clear")
 
-manager.create_note("kupit mlieko", True)
-manager.create_note("kupit chlieb", False)
+def pause():
+    input("Press enter to continue ...")
 
-manager.list_note()
+def show_menu():
+    print("""
+=======================
+= Simpe Notes Manager =
+=======================
+1. Add a note
+2. List notes
+3. Delete a note
+4. Exit
+          """)
+
+def get_choice():
+    choice = input("Please enter the number 1-4: ").strip()
+    return choice
+
+def main():
+    manager = NoteManager()
+
+    while True:
+        clear_terminal()
+        show_menu()
+        choice = get_choice()
+        if choice == "1":
+            note_text = input("Enter note: ")
+            important = input("Important? (y/n): ").strip().lower() == "y"
+            manager.create_note(note_text, important)
+            pause()
+        elif choice == "2":
+            manager.list_note()
+            pause()
+        elif choice == "3":
+            search_id = int(input("Enter note ID to delete: "))
+            manager.delete_note(search_id)
+            pause()
+        elif choice == "4":
+            print("👋 Goodbye!")
+            break
+        else:
+            print("\n⚠️  Invalid option. Please choose 1-4.\n")
+            pause()
+    
+
+if __name__ == "__main__":
+    main()
