@@ -6,3 +6,5 @@ __pycache__/
 *.pyc
 history.txt
 example.txt
+.ipynb_checkpoints/
+*.log
