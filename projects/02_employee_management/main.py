@@ -41,7 +41,12 @@ class Employee:
         self.__salary = amount
 
 class Manager(Employee):
-    pass
+    def add_employee_to_department(self, department, employee):
+        if not isinstance(department, Department):
+            raise TypeError("Department must be an instance of Department.")
+        if department.manager is not self:
+            raise ValueError("This manager does not manage this department.")
+        department.add_employee(employee)
 
 class Department:
     def __init__(self, name, manager):
@@ -69,19 +74,14 @@ class Department:
 
 def main():
     e1 = Employee("Janko", "Mrkvicka", "Technician", 2000)
+    e2 = Employee("Martina", "Vesela", "Economist", 2400)
     m1 = Manager("Martin", "Konecny", "Manager", 3000)
     d1 = Department("HR", m1)
+    m2 = Manager("Peter", "Mokry", "Manager", 3100)
+    d2 = Department("Tech", m2)
 
-    print(e1)
-    e1.raise_salary(200)
-    print(e1)
-    print(m1)
-    print(d1.name)
-    print(d1.manager)
-
-    d1.add_employee(e1)
-    d1.add_employee(m1)
-    print(d1.list_employee())
+    m1.add_employee_to_department(d1, e2)
+    print(d1.list_employees())
 
 if __name__ == "__main__":
     main()
