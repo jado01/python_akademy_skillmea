@@ -40,13 +40,48 @@ class Employee:
             raise ValueError("Salary must be > 0")
         self.__salary = amount
 
+class Manager(Employee):
+    pass
+
+class Department:
+    def __init__(self, name, manager):
+        self.name = name
+        if not isinstance(manager, Manager):
+            raise TypeError("Department manager must be an instance of Manager")
+        self.manager = manager
+        self.employees = []
+    
+    def add_employee(self, employee):
+        if not isinstance(employee, Employee):
+            raise TypeError(f"Only an Employee instance can be added to department {self.name}")
+        if employee in self.employees:
+            raise ValueError(f"Employee is already in department {self.name}")
+        self.employees.append(employee)
+        save_log(f"Employee: {employee.name} {employee.surname}, position: {employee.position}, added to department: {self.name}.")
+
+    def list_employees(self):
+        if not self.employees:
+            raise f"Department {self.name} has no employee."
+        lines =  [f"Employees in department {self.name}:"]
+        for employee in self.employees:
+            lines.append(f"- {employee.name} {employee.surname}")
+        return "\n".join(lines)
 
 def main():
     e1 = Employee("Janko", "Mrkvicka", "Technician", 2000)
+    m1 = Manager("Martin", "Konecny", "Manager", 3000)
+    d1 = Department("HR", m1)
 
     print(e1)
     e1.raise_salary(200)
     print(e1)
+    print(m1)
+    print(d1.name)
+    print(d1.manager)
+
+    d1.add_employee(e1)
+    d1.add_employee(m1)
+    print(d1.list_employee())
 
 if __name__ == "__main__":
     main()
