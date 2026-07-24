@@ -30,5 +30,26 @@ class Department:
             return f"Department {self.name} has no employee."
         lines =  [f"Employees in department {self.name}:"]
         for employee in self.employees:
-            lines.append(f"- {employee.name} {employee.surname}")
+            lines.append(f" - {employee.name} {employee.surname}")
+        return "\n".join(lines)
+
+class Leader(Manager):
+    def __init__(self, name, surname, position, salary):
+        super().__init__(name, surname, position, salary)
+        self.departments = []
+
+    def add_department(self, department):
+        if not isinstance(department, Department):
+            raise TypeError("Only a Department instance can be added to the list of departments.")
+        if department in self.departments:
+            raise ValueError("Department is already in list.")
+        self.departments.append(department)
+        save_log(f"Department: {department.name} assigned to list of leader {self.name} {self.surname}.")
+
+    def list_departments(self):
+        if not self.departments:
+            return f"Leader {self.name} {self.surname} has no departments."
+        lines = [f"Leader {self.name} {self.surname} has these departments:"]
+        for department in self.departments:
+            lines.append(f" - {department.name}")
         return "\n".join(lines)
