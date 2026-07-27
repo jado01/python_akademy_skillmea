@@ -1,11 +1,14 @@
 from modules.audit_log import save_log
 
 class Employee:
+    _next_id = 1
     def __init__(self, name, surname, position, salary):
         self.name = name
         self.surname = surname
         self.position = position
         self.salary = salary
+        self.employee_id = Employee._next_id
+        Employee._next_id += 1
 
     def raise_salary(self, increase_amount):
         if not isinstance(increase_amount, int):
@@ -17,7 +20,7 @@ class Employee:
         save_log(f"Salary increased for {self.name} {self.surname}: old salary {old_salary}, increase {increase_amount}, new salary {self.salary}.")
 
     def __str__(self):
-        return f"Name: {self.name}\nSurname: {self.surname}\nPosition: {self.position}\nSalary: {self.salary}"
+        return f"ID: {self.employee_id} Name: {self.name} Surname: {self.surname} Position: {self.position} Salary: {self.salary}"
 
     @property
     def salary(self):
