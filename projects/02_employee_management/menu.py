@@ -1,10 +1,19 @@
+import os
 from modules.employee import Employee
 from modules.data_storage import save_employees, load_employees
+
+
+def clear_terminal():
+    os.system("cls") if os.name == "nt" else os.system("clear")
+        
+def pause():
+    input("Press Enter to continue ...")
 
 def run_menu():
     employees = load_employees()
 
     while True:
+        clear_terminal()
         print("""--== Employee management system ==--
     1. Create new employee
     2. Show all employees
@@ -22,6 +31,8 @@ def run_menu():
             new_employee = Employee(name, surname, position, salary)
             employees.append(new_employee)
             save_employees(employees)
+            print(f"New employee with ID: {new_employee.employee_id} name: {new_employee.name}, surname: {new_employee.surname}, position: {new_employee.position}, salary: {new_employee.salary} created.")
+            pause()
 
         elif choice == "2":
             if not employees:
@@ -29,6 +40,7 @@ def run_menu():
             else:
                 for employee in employees:
                     print(employee)
+            pause()
                 
         elif choice == "3":
             if not employees:
@@ -54,6 +66,7 @@ def run_menu():
                         print("Operation was canceled.")
                     else:
                         print("Invalid input.")
+            pause()
 
                     
 
@@ -62,3 +75,4 @@ def run_menu():
             break
         else:
             print("Invalid choice, please choose 1 - 4.")
+            pause()
