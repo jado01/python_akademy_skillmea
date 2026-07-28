@@ -2,13 +2,18 @@ from modules.audit_log import save_log
 
 class Employee:
     _next_id = 1
-    def __init__(self, name, surname, position, salary):
+    def __init__(self, name, surname, position, salary, employee_id = None):
         self.name = name
         self.surname = surname
         self.position = position
         self.salary = salary
-        self.employee_id = Employee._next_id
-        Employee._next_id += 1
+        if employee_id is None:
+            self.employee_id = Employee._next_id
+            Employee._next_id += 1
+        else:
+            self.employee_id = employee_id
+            if employee_id >= Employee._next_id:
+                Employee._next_id = employee_id + 1
 
     def raise_salary(self, increase_amount):
         if not isinstance(increase_amount, int):

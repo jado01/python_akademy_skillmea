@@ -8,3 +8,4 @@ history.txt
 example.txt
 .ipynb_checkpoints/
 *.log
+employees.json

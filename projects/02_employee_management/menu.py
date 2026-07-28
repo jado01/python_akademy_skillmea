@@ -1,7 +1,8 @@
 from modules.employee import Employee
+from modules.data_storage import save_employees, load_employees
 
 def run_menu():
-    employees = []
+    employees = load_employees()
 
     while True:
         print("""--== Employee management system ==--
@@ -20,6 +21,7 @@ def run_menu():
             salary = int(input("Enter a salary: "))
             new_employee = Employee(name, surname, position, salary)
             employees.append(new_employee)
+            save_employees(employees)
 
         elif choice == "2":
             if not employees:
@@ -46,6 +48,7 @@ def run_menu():
                         old_salary = found_employee.salary
                         increase_amount = int(input("Enter the amount of the salary increase: "))
                         found_employee.raise_salary(increase_amount)
+                        save_employees(employees)
                         print(f"Salary of {found_employee.name} {found_employee.surname} was increased by {increase_amount} from {old_salary} to {found_employee.salary}.")
                     elif confirmation == "n":
                         print("Operation was canceled.")
