@@ -41,9 +41,12 @@ def run_menu():
                 if found_employee is None:
                     print("There is no employee with this ID.")
                 else:
-                    confirmation = input(f"CONFIRMATION! This employe? {found_employee}? (y / n): ")
+                    confirmation = input(f"CONFIRMATION! This employee? {found_employee}? (y / n): ").strip().lower()
                     if confirmation == "y":
-                        print("Salary will be increased.")
+                        old_salary = found_employee.salary
+                        increase_amount = int(input("Enter the amount of the salary increase: "))
+                        found_employee.raise_salary(increase_amount)
+                        print(f"Salary of {found_employee.name} {found_employee.surname} was increased by {increase_amount} from {old_salary} to {found_employee.salary}.")
                     elif confirmation == "n":
                         print("Operation was canceled.")
                     else:
