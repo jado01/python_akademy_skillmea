@@ -1,9 +1,11 @@
 import json
 from pathlib import Path
-from modules.employee import Employee
+from models.employee import Employee
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_FILE = BASE_DIR / "employees.json"
+DATA_DIR = BASE_DIR / "data"
+DATA_DIR.mkdir(exist_ok=True)
+DATA_FILE = DATA_DIR / "employees.json"
 
 def save_employees(employees):
 

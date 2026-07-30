@@ -1,4 +1,4 @@
-from modules.audit_log import save_log
+from services.audit_log import save_log
 
 class Employee:
     _next_id = 1

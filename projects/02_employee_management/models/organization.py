@@ -1,5 +1,5 @@
-from modules.employee import Employee
-from modules.audit_log import save_log
+from models.employee import Employee
+from services.audit_log import save_log
 
 class Manager(Employee):
     def add_employee_to_department(self, department, employee):

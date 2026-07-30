@@ -1,6 +1,6 @@
 import os
-from modules.employee import Employee
-from modules.data_storage import save_employees, load_employees
+from models.employee import Employee
+from services.data_storage import save_employees, load_employees
 
 
 def clear_terminal():
