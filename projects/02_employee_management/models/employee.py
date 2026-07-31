@@ -25,7 +25,7 @@ class Employee:
         save_log(f"Salary increased for {self.name} {self.surname}: old salary {old_salary}, increase {increase_amount}, new salary {self.salary}.")
 
     def __str__(self):
-        return f"ID: {self.employee_id} Name: {self.name} Surname: {self.surname} Position: {self.position} Salary: {self.salary}"
+        return f"ID: {self.employee_id} employee type: {self.employee_type} Name: {self.name} Surname: {self.surname} Position: {self.position} Salary: {self.salary}"
 
     @property
     def salary(self):
@@ -38,3 +38,7 @@ class Employee:
         if amount <= 0:
             raise ValueError("Salary must be > 0")
         self.__salary = amount
+
+    @property
+    def employee_type(self):
+        return "employee"

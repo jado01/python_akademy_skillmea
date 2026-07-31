@@ -9,6 +9,10 @@ class Manager(Employee):
             raise ValueError("This manager does not manage this department.")
         department.add_employee(employee)
 
+    @property
+    def employee_type(self):
+        return "manager"
+
 class Department:
     def __init__(self, name, manager):
         self.name = name
@@ -84,6 +88,10 @@ class Leader(Manager):
         for department in self.departments:
             lines.append(f" - {department.name}")
         return "\n".join(lines)
+
+    @property
+    def employee_type(self):
+        return "leader"
 
 class Team:
     def __init__(self, name):

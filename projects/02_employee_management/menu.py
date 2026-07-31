@@ -1,5 +1,6 @@
 import os
 from models.employee import Employee
+from models.organization import Manager
 from services.data_storage import save_employees, load_employees
 
 
@@ -12,10 +13,16 @@ def pause():
 def get_non_empty_input(prompt):
     while True:
         value = input(prompt).strip()
-        if value:
-            return value
-        print("This field cannot be empty. Please try again.")
 
+        if not value:
+            print("This field cannot be empty. Please try again.")
+            continue
+
+        if value.isdigit():
+            print("This field cannot contain only numbers. Please try again.")
+            continue
+
+        return value
 
 def run_menu():
     employees = load_employees()
@@ -26,7 +33,8 @@ def run_menu():
     1. Create new employee
     2. Show all employees
     3. Increase an employee's salary
-    4. Exit
+    4. Create a new manager
+    5. Exit
     """)
 
         choice = input("Please choose an option: ")
@@ -97,11 +105,28 @@ def run_menu():
                         print("Invalid input.")
             pause()
 
-                    
-
         elif choice == "4":
+            name = get_non_empty_input("Enter a name: ")
+            surname = get_non_empty_input("Enter a surname: ")
+            position = get_non_empty_input("Enter a position: ")            
+
+            while True:
+                try:
+                    salary = int(input("Enter a salary: "))
+                    new_manager = Manager(name, surname, position, salary)
+                except ValueError:
+                    print("Salary must by a number and higher than 0!")
+                    continue
+                break
+
+            employees.append(new_manager)
+            save_employees(employees)
+            print(f"New manager with ID: {new_manager.employee_id} name: {new_manager.name}, surname: {new_manager.surname}, position: {new_manager.position}, salary: {new_manager.salary} created.")
+            pause()
+
+        elif choice == "5":
             print("The program is over")
             break
         else:
-            print("Invalid choice, please choose 1 - 4.")
+            print("Invalid choice, please choose 1 - 5.")
             pause()
