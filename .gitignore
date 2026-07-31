@@ -9,3 +9,4 @@ example.txt
 .ipynb_checkpoints/
 *.log
 employees.json
+manualy_test.py
