@@ -69,8 +69,8 @@ class Department:
         save_log(f"Employee {employee.name} {employee.surname} from department {self.name} added to the team {team.name}.")
             
 class Leader(Manager):
-    def __init__(self, name, surname, position, salary):
-        super().__init__(name, surname, position, salary)
+    def __init__(self, name, surname, position, salary, employee_id=None):
+        super().__init__(name, surname, position, salary, employee_id=employee_id)
         self.departments = []
 
     def add_department(self, department):

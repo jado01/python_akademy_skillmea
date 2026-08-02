@@ -2,7 +2,7 @@ from services.audit_log import save_log
 
 class Employee:
     _next_id = 1
-    def __init__(self, name, surname, position, salary, employee_id = None):
+    def __init__(self, name, surname, position, salary, employee_id=None):
         self.name = name
         self.surname = surname
         self.position = position
