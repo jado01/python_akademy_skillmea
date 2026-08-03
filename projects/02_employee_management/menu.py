@@ -37,6 +37,36 @@ def select_department(departments):
 
         print("This department doesn't exist.")
 
+def select_team(department):
+    print(department.list_teams())
+
+    while True:
+        chosen_team = get_non_empty_input("Enter a name of team: ")
+
+        for team in department.teams:
+            if team.name.lower() == chosen_team.lower():
+                return team
+
+        print("This team doesn't exist.")
+
+def select_employee(employees):
+    for employee in employees:
+        print(employee)
+
+    while True:
+        try:
+            chosen_employee_id = int(input("Enter ID of employee: "))
+        except ValueError:
+            print("ID must be a number.")
+            continue
+
+        for employee in employees:
+            if employee.employee_id == chosen_employee_id:
+                return employee
+
+        print("Employee with this ID doesn't exist.")
+
+
 
 def run_menu():
     employees = load_employees()
@@ -49,11 +79,12 @@ def run_menu():
     2. Show all employees
     3. Increase an employee's salary
     4. Create a new manager
-    5. Create a newe department
+    5. Create a new department
     6. Show all departments.
     7. Add an employee to a department
     8. Create a new team
-    9. Exit
+    9. Add an employee to a team
+    10. Exit
     """)
 
         choice = input("Please choose an option: ")
@@ -213,33 +244,17 @@ def run_menu():
                     found_department = select_department(departments)                                                
                 
                     print(f"Which employee do you want to add to department {found_department.name}?")
-                    for employee in available_employees:
-                        print(employee)
 
                     while True:
+                        chosen_employee = select_employee(available_employees)
+
                         try:
-                            chosen_employee_id = int(input("Enter ID of employee: "))
-                        except ValueError:
-                            print("ID must be a number.")
-                            continue
-
-                        chosen_employee = None
-                                
-                        for employee in available_employees:
-                            if chosen_employee_id == employee.employee_id:
-                                chosen_employee = employee
-                                break
-
-                        if chosen_employee is None:
-                            print("There is no employee with this ID. Please try again.")
+                            found_department.manager.add_employee_to_department(found_department, chosen_employee)
+                        except ValueError as error:
+                            print(error)
                         else:
-                            try:
-                                found_department.manager.add_employee_to_department(found_department, chosen_employee)
-                            except ValueError as error:
-                                print(error)
-                            else:
-                                print(f"Employee {chosen_employee.name} {chosen_employee.surname} added to department {found_department.name}")
-                                break
+                            print(f"Employee {chosen_employee.name} {chosen_employee.surname} added to department {found_department.name}")
+                            break
             pause()
 
         elif choice == "8":
@@ -262,8 +277,37 @@ def run_menu():
             pause()
 
         elif choice == "9":
+            if not departments:
+                print("You need at least one department.")
+            else:
+                found_department = select_department(departments)
+
+                if not found_department.teams:
+                    print(f"Department {found_department.name} has no teams.")
+                else:
+
+                    if not found_department.employees:
+                        print(f"Department {found_department.name} has no employees.")
+                    else:
+                        found_team = select_team(found_department)
+                        chosen_employee = select_employee(found_department.employees)
+
+                        try:
+                            found_department.add_employee_to_team(chosen_employee, found_team)
+                        except ValueError as error:
+                            print(error)
+                        else:
+                            print(f"Employee {chosen_employee.name} {chosen_employee.surname} from department {found_department.name} was added to team {found_team.name}")
+                            print(found_team.list_members())
+                        
+
+            pause()
+
+
+
+        elif choice == "10":
             print("The program is over")
             break
         else:
-            print("Invalid choice, please choose 1 - 9.")
+            print("Invalid choice, please choose 1 - 10.")
             pause()
