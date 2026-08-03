@@ -36,7 +36,9 @@ def run_menu():
     3. Increase an employee's salary
     4. Create a new manager
     5. Create a newe department
-    6. Exit
+    6. Show all departments.
+    7. Add an employee to a department
+    8. Exit
     """)
 
         choice = input("Please choose an option: ")
@@ -175,8 +177,73 @@ def run_menu():
             pause()
 
         elif choice == "6":
+            if not departments:
+                print("No departments to show.")
+            else:
+                for department in departments:
+                    print(f"Department: {department.name}, Manager: {department.manager.name} {department.manager.surname}")
+            pause()
+
+        elif choice == "7":
+            if not departments:
+                print("You need at least one department before adding an employee.")
+            else:
+                available_employees = []
+                for employee in employees:
+                    if employee.employee_type == "employee":
+                        available_employees.append(employee)
+                if not available_employees:
+                    print("There are no employees available to add.")
+                else:
+                    for department in departments:
+                        print(f"Department: {department.name}, Manager: {department.manager.name} {department.manager.surname}")
+
+                    while True:
+                        found_department = None
+                        chosen_department = get_non_empty_input("Enter a name of department: ")
+
+                        for department in departments:
+                            if department.name.lower() == chosen_department.lower():
+                                found_department = department
+                                break
+
+                        if found_department is None:
+                            print("This department doesn't exist.")
+                        else:
+                            print(f"Which employee you want to add to department {chosen_department}?")
+                            for employee in available_employees:
+                                print(employee)
+
+                            while True:
+                                try:
+                                    chose_id = int(input("Enter ID of employee: "))
+                                except ValueError:
+                                    print("ID must be a number.")
+                                    continue
+
+                                chosen_employee = None
+                                
+                                for employee in available_employees:
+                                    if chose_id == employee.employee_id:
+                                        chosen_employee = employee
+                                        break
+
+                                if chosen_employee is None:
+                                    print("There is no employee with this ID. Please try again.")
+                                else:
+                                    try:
+                                        found_department.manager.add_employee_to_department(found_department, chosen_employee)
+                                    except ValueError as error:
+                                        print(error)
+                                    else:
+                                        print(f"Employee {chosen_employee.name} {chosen_employee.surname} added to department {found_department.name}")
+                                        break
+                            break
+            pause()
+
+        elif choice == "8":
             print("The program is over")
             break
         else:
-            print("Invalid choice, please choose 1 - 6.")
+            print("Invalid choice, please choose 1 - 8.")
             pause()
