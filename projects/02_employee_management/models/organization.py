@@ -49,7 +49,7 @@ class Department:
         new_team = Team(name)
 
         for team in self.teams:
-            if team.name == new_team.name:
+            if team.name.lower() == new_team.name.lower():
                 raise ValueError("This team already exists.")
 
         self.teams.append(new_team)

@@ -38,7 +38,8 @@ def run_menu():
     5. Create a newe department
     6. Show all departments.
     7. Add an employee to a department
-    8. Exit
+    8. Create a new team
+    9. Exit
     """)
 
         choice = input("Please choose an option: ")
@@ -242,8 +243,42 @@ def run_menu():
             pause()
 
         elif choice == "8":
+            if not departments:
+                print("You need to create a department before creating a team.")
+            else:
+                for department in departments:
+                    print(f"Department: {department.name}")
+                print("In which department you want to create team?")
+
+                while True:
+                    found_department = None
+                    chosen_department = get_non_empty_input("Please enter a name of department: ")
+
+                    for department in departments:
+                        if department.name.lower() == chosen_department.lower():
+                            found_department = department
+                            break
+
+                    if found_department is None:
+                        print("This department doesn't exist.")
+                    else:
+                        while True:
+                            team_name = get_non_empty_input("Please enter a team name: ")
+                            try:
+                                new_team = found_department.create_team(team_name)
+                            except ValueError as error:
+                                print(error)
+                            else:
+                                print(f"Team {team_name} was added to department {found_department.name}")
+                                print(found_department.list_teams())
+                                break
+                        break
+
+            pause()
+
+        elif choice == "9":
             print("The program is over")
             break
         else:
-            print("Invalid choice, please choose 1 - 8.")
+            print("Invalid choice, please choose 1 - 9.")
             pause()
