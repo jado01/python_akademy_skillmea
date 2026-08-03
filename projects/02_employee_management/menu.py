@@ -24,6 +24,20 @@ def get_non_empty_input(prompt):
 
         return value
 
+def select_department(departments):
+    for department in departments:
+        print(f"Department: {department.name}, Manager: {department.manager.name} {department.manager.surname}")
+
+    while True:
+        chosen_department = get_non_empty_input("Enter a name of department: ")
+
+        for department in departments:
+            if department.name.lower() == chosen_department.lower():
+                return department
+
+        print("This department doesn't exist.")
+
+
 def run_menu():
     employees = load_employees()
     departments = []
@@ -196,82 +210,53 @@ def run_menu():
                 if not available_employees:
                     print("There are no employees available to add.")
                 else:
-                    for department in departments:
-                        print(f"Department: {department.name}, Manager: {department.manager.name} {department.manager.surname}")
+                    found_department = select_department(departments)                                                
+                
+                    print(f"Which employee do you want to add to department {found_department.name}?")
+                    for employee in available_employees:
+                        print(employee)
 
                     while True:
-                        found_department = None
-                        chosen_department = get_non_empty_input("Enter a name of department: ")
+                        try:
+                            chosen_employee_id = int(input("Enter ID of employee: "))
+                        except ValueError:
+                            print("ID must be a number.")
+                            continue
 
-                        for department in departments:
-                            if department.name.lower() == chosen_department.lower():
-                                found_department = department
+                        chosen_employee = None
+                                
+                        for employee in available_employees:
+                            if chosen_employee_id == employee.employee_id:
+                                chosen_employee = employee
                                 break
 
-                        if found_department is None:
-                            print("This department doesn't exist.")
+                        if chosen_employee is None:
+                            print("There is no employee with this ID. Please try again.")
                         else:
-                            print(f"Which employee you want to add to department {chosen_department}?")
-                            for employee in available_employees:
-                                print(employee)
-
-                            while True:
-                                try:
-                                    chose_id = int(input("Enter ID of employee: "))
-                                except ValueError:
-                                    print("ID must be a number.")
-                                    continue
-
-                                chosen_employee = None
-                                
-                                for employee in available_employees:
-                                    if chose_id == employee.employee_id:
-                                        chosen_employee = employee
-                                        break
-
-                                if chosen_employee is None:
-                                    print("There is no employee with this ID. Please try again.")
-                                else:
-                                    try:
-                                        found_department.manager.add_employee_to_department(found_department, chosen_employee)
-                                    except ValueError as error:
-                                        print(error)
-                                    else:
-                                        print(f"Employee {chosen_employee.name} {chosen_employee.surname} added to department {found_department.name}")
-                                        break
-                            break
+                            try:
+                                found_department.manager.add_employee_to_department(found_department, chosen_employee)
+                            except ValueError as error:
+                                print(error)
+                            else:
+                                print(f"Employee {chosen_employee.name} {chosen_employee.surname} added to department {found_department.name}")
+                                break
             pause()
 
         elif choice == "8":
             if not departments:
                 print("You need to create a department before creating a team.")
             else:
-                for department in departments:
-                    print(f"Department: {department.name}")
-                print("In which department you want to create team?")
-
+                found_department = select_department(departments)
+                
                 while True:
-                    found_department = None
-                    chosen_department = get_non_empty_input("Please enter a name of department: ")
-
-                    for department in departments:
-                        if department.name.lower() == chosen_department.lower():
-                            found_department = department
-                            break
-
-                    if found_department is None:
-                        print("This department doesn't exist.")
+                    team_name = get_non_empty_input("Please enter a team name: ")
+                    try:
+                        new_team = found_department.create_team(team_name)
+                    except ValueError as error:
+                        print(error)
                     else:
-                        while True:
-                            team_name = get_non_empty_input("Please enter a team name: ")
-                            try:
-                                new_team = found_department.create_team(team_name)
-                            except ValueError as error:
-                                print(error)
-                            else:
-                                print(f"Team {team_name} was added to department {found_department.name}")
-                                print(found_department.list_teams())
-                                break
+                        print(f"Team {new_team.name} was added to department {found_department.name}")
+                        print(found_department.list_teams())
                         break
 
             pause()
