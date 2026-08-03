@@ -15,9 +15,16 @@ class Manager(Employee):
 
 class Department:
     def __init__(self, name, manager):
+        if not isinstance(name, str):
+            raise TypeError("Name of the department must be a string.")
+        name = name.strip()
+        if not name:
+            raise ValueError("Name of the department cannot be empty.")
         self.name = name
         if not isinstance(manager, Manager):
-            raise TypeError("Department manager must be an instance of Manager")
+            raise TypeError("Department manager must be an instance of Manager.")
+        if name.isdigit():
+            raise ValueError("Department name cannot contain only numbers.")
         self.manager = manager
         self.employees = []
         self.teams = []

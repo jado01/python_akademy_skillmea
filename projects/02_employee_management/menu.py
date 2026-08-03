@@ -1,6 +1,6 @@
 import os
 from models.employee import Employee
-from models.organization import Manager
+from models.organization import Manager, Department
 from services.data_storage import save_employees, load_employees
 
 
@@ -26,6 +26,7 @@ def get_non_empty_input(prompt):
 
 def run_menu():
     employees = load_employees()
+    departments = []
 
     while True:
         clear_terminal()
@@ -34,7 +35,8 @@ def run_menu():
     2. Show all employees
     3. Increase an employee's salary
     4. Create a new manager
-    5. Exit
+    5. Create a newe department
+    6. Exit
     """)
 
         choice = input("Please choose an option: ")
@@ -125,8 +127,56 @@ def run_menu():
             pause()
 
         elif choice == "5":
+            managers = []
+
+            for employee in employees:
+                if isinstance(employee, Manager):
+                    managers.append(employee)
+            if not managers:
+                print("You need at least one manager to create a new department.")
+                pause()
+                continue
+            for manager in managers:
+                print(manager)
+
+            found_manager = None
+
+            while True:
+                try:
+                    manager_id = int(input("Enter ID of manager: "))
+                    for manager in managers:
+                        if manager.employee_id == manager_id:
+                            found_manager = manager
+                            break
+                except ValueError:
+                    print("ID must be a number!")
+                    pause()
+                    continue
+
+                if found_manager is None:
+                    print("There is no manager with this ID. Please enter ID again.")
+                else:
+                    while True:
+                        department_name = get_non_empty_input("Enter a department name: ")
+                        existing_department = None
+                        for department in departments:
+                            if department.name.lower() == department_name.lower():
+                                existing_department = department
+                                break
+                        if existing_department is not None:
+                            print("This department already exist. Please try again")
+                        else:
+                            new_department = Department(department_name, found_manager)
+                            departments.append(new_department)
+                            print(f"New department {department_name} with manager {found_manager.name} {found_manager.surname} created")
+                            break
+                    break
+
+            pause()
+
+        elif choice == "6":
             print("The program is over")
             break
         else:
-            print("Invalid choice, please choose 1 - 5.")
+            print("Invalid choice, please choose 1 - 6.")
             pause()
