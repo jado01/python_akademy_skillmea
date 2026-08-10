@@ -1,6 +1,6 @@
 import os
 from models.employee import Employee
-from models.organization import Manager, Department
+from models.organization import Manager, Department, Leader
 from services.data_storage import save_employees, load_employees
 
 
@@ -85,7 +85,9 @@ def run_menu():
     8. Create a new team
     9. Add an employee to a team
     10. Show organization structure
-    11. Exit
+    11. Create a new Leader
+    12. Add department to leader
+    13. Exit
     """)
 
         choice = input("Please choose an option: ")
@@ -179,8 +181,9 @@ def run_menu():
             managers = []
 
             for employee in employees:
-                if isinstance(employee, Manager):
+                if employee.employee_type == "manager":
                     managers.append(employee)
+
             if not managers:
                 print("You need at least one manager to create a new department.")
                 pause()
@@ -337,11 +340,58 @@ def run_menu():
 
             pause()
 
-
-
         elif choice == "11":
+            name = get_non_empty_input("Enter a name: ")
+            surname = get_non_empty_input("Enter a surname: ")
+            position = get_non_empty_input("Enter a position: ")            
+
+            while True:
+                try:
+                    salary = int(input("Enter a salary: "))
+                    new_leader = Leader(name, surname, position, salary)
+                except ValueError:
+                    print("Salary must by a number and higher than 0!")
+                    continue
+                break
+
+            employees.append(new_leader)
+            save_employees(employees)
+            print(f"New leader with ID: {new_leader.employee_id} name: {new_leader.name}, surname: {new_leader.surname}, position: {new_leader.position}, salary: {new_leader.salary} created.")
+            pause()
+
+        elif choice == "12":
+
+            leaders = []
+
+            for employee in employees:
+                if employee.employee_type == "leader":
+                    leaders.append(employee)
+
+            if not leaders:
+                print("There are no leaders.")
+            else:
+                if not departments:
+                    print("You need to create a department before adding to leader.")
+                    
+                else:
+                    chosen_leader = select_employee(leaders)
+                    
+                    chosen_department = select_department(departments)
+                    
+                    try:
+                        chosen_leader.add_department(chosen_department)
+                    except ValueError as error:
+                        print(error)
+                    else:
+                        print(f"Department {chosen_department.name} was added to leader {chosen_leader.name} {chosen_leader.surname}")
+
+            pause()
+
+
+        elif choice == "13":
             print("The program is over")
             break
+
         else:
-            print("Invalid choice, please choose 1 - 11.")
+            print("Invalid choice, please choose 1 - 13.")
             pause()

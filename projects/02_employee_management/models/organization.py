@@ -23,6 +23,8 @@ class Department:
         self.name = name
         if not isinstance(manager, Manager):
             raise TypeError("Department manager must be an instance of Manager.")
+        if manager.employee_type != "manager":
+            raise ValueError("Department manager must have employee type 'manager'.")
         if name.isdigit():
             raise ValueError("Department name cannot contain only numbers.")
         self.manager = manager
