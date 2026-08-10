@@ -84,7 +84,8 @@ def run_menu():
     7. Add an employee to a department
     8. Create a new team
     9. Add an employee to a team
-    10. Exit
+    10. Show organization structure
+    11. Exit
     """)
 
         choice = input("Please choose an option: ")
@@ -303,11 +304,44 @@ def run_menu():
 
             pause()
 
-
-
         elif choice == "10":
+
+            if not departments:
+                print("You need at least one department to show organization structure.")
+            else:
+                print("Organization structure:")
+                for department in departments:
+                    print(f" - Department: {department.name}")
+                    print(f"  - Manager: {department.manager.name} {department.manager.surname}")
+
+                    if not department.employees:
+                        print("  - There are no employees in this department.")
+                    else:
+                        print("  - Employees:")
+                        for employee in department.employees:
+                            print(f"   - {employee.name} {employee.surname}")
+
+                    if not department.teams:
+                        print("  - There are no teams in this department.")
+                    else:
+                        print("  - Teams:")
+                        for team in department.teams:
+                            print(f"   - {team.name}")
+
+                            if not team.members:
+                                print("    - There are no members in this team.")
+                            else:
+                                print("    - Members:")
+                                for member in team.members:
+                                    print(f"     - {member.name} {member.surname}")
+
+            pause()
+
+
+
+        elif choice == "11":
             print("The program is over")
             break
         else:
-            print("Invalid choice, please choose 1 - 10.")
+            print("Invalid choice, please choose 1 - 11.")
             pause()
