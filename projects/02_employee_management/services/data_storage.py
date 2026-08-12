@@ -55,7 +55,13 @@ def save_departments(departments):
             leader_id = None
         else:
             leader_id = department.leader.employee_id
-        department_data = {"department_name": department.name, "manager_id": department.manager.employee_id, "leader_id": leader_id}
+
+        employee_ids = []
+
+        for employee in department.employees:
+            employee_ids.append(employee.employee_id)
+
+        department_data = {"department_name": department.name, "manager_id": department.manager.employee_id, "leader_id": leader_id, "employee_ids": employee_ids}
         departments_list.append(department_data)
 
     with open(ORGANIZATION_FILE, "w", encoding="utf-8") as f:
@@ -74,6 +80,7 @@ def load_departments(employees):
                 leader = None
                 manager_id = department_data["manager_id"]
                 leader_id = department_data["leader_id"]
+                employee_ids = department_data["employee_ids"]
 
                 for employee in employees:
                     if manager_id == employee.employee_id:
@@ -88,7 +95,9 @@ def load_departments(employees):
                     department = Department(department_name, manager)
 
                 if leader_id is not None:
+
                     for employee in employees:
+
                         if leader_id == employee.employee_id:
                             leader = employee
                             break
@@ -99,7 +108,22 @@ def load_departments(employees):
                     if leader.employee_type != "leader" :
                         raise ValueError(f"Department {department_name} refers to employee ID {leader_id}, but this employee is not a leader.")
 
-                    leader.add_department(department)
+                    leader.add_department(department, log_event=False)
+
+                for employee_id in employee_ids:
+                    found_employee = None
+
+                    for employee in employees:
+
+                        if employee_id == employee.employee_id:
+                            found_employee = employee
+                            break
+
+                    if found_employee is None:
+                        raise ValueError(f"Department {department_name} refers to missing employee ID {employee_id}.")
+
+                    department.add_employee(found_employee, log_event=False)
+
 
                 departments_list.append(department)
 

@@ -263,6 +263,7 @@ def run_menu():
 
                         try:
                             found_department.manager.add_employee_to_department(found_department, chosen_employee)
+                            save_departments(departments)
                         except ValueError as error:
                             print(error)
                         else:

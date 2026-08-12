@@ -32,13 +32,14 @@ class Department:
         self.employees = []
         self.teams = []
     
-    def add_employee(self, employee):
+    def add_employee(self, employee, log_event=True):
         if not isinstance(employee, Employee):
             raise TypeError(f"Only an Employee instance can be added to department {self.name}")
         if employee in self.employees:
             raise ValueError(f"Employee is already in department {self.name}")
         self.employees.append(employee)
-        save_log(f"Employee: {employee.name} {employee.surname}, position: {employee.position}, added to department: {self.name}.")
+        if log_event is True:
+            save_log(f"Employee: {employee.name} {employee.surname}, position: {employee.position}, added to department: {self.name}.")
 
     def list_employees(self):
         if not self.employees:
@@ -83,7 +84,7 @@ class Leader(Manager):
         super().__init__(name, surname, position, salary, employee_id=employee_id)
         self.departments = []
 
-    def add_department(self, department):
+    def add_department(self, department, log_event=True):
         if not isinstance(department, Department):
             raise TypeError("Only a Department instance can be added to the list of departments.")
         if department in self.departments:
@@ -92,7 +93,8 @@ class Leader(Manager):
             raise ValueError("This department is already assigned to another leader.")
         self.departments.append(department)
         department.leader = self
-        save_log(f"Department: {department.name} assigned to list of leader {self.name} {self.surname}.")
+        if log_event is True:
+            save_log(f"Department: {department.name} assigned to list of leader {self.name} {self.surname}.")
 
     def list_departments(self):
         if not self.departments:
