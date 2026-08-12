@@ -66,6 +66,15 @@ def select_employee(employees):
 
         print("Employee with this ID doesn't exist.")
 
+def get_leaders(employees):
+    leaders = []
+
+    for employee in employees:
+        if employee.employee_type == "leader":
+            leaders.append(employee)
+    return leaders
+
+
 
 
 def run_menu():
@@ -223,7 +232,6 @@ def run_menu():
                             print(f"New department {department_name} with manager {found_manager.name} {found_manager.surname} created")
                             break
                     break
-
             pause()
 
         elif choice == "6":
@@ -277,7 +285,6 @@ def run_menu():
                         print(f"Team {new_team.name} was added to department {found_department.name}")
                         print(found_department.list_teams())
                         break
-
             pause()
 
         elif choice == "9":
@@ -303,16 +310,29 @@ def run_menu():
                         else:
                             print(f"Employee {chosen_employee.name} {chosen_employee.surname} from department {found_department.name} was added to team {found_team.name}")
                             print(found_team.list_members())
-                        
-
             pause()
 
         elif choice == "10":
+            leaders = get_leaders(employees)
+
+            print("Organization structure:")
+
+            if not leaders:
+                print("There are no leaders in the organization.")
+            else:
+                print(f" - Leaders:")
+                for leader in leaders:
+                    print(f"  - {leader.name} {leader.surname}")
+                    if not leader.departments:
+                        print("    This leader has no department.")
+                    else:
+                        print("   Departments:")
+                        for department in leader.departments:
+                            print(f"    - {department.name}")
 
             if not departments:
                 print("You need at least one department to show organization structure.")
             else:
-                print("Organization structure:")
                 for department in departments:
                     print(f" - Department: {department.name}")
                     print(f"  - Manager: {department.manager.name} {department.manager.surname}")
@@ -337,7 +357,6 @@ def run_menu():
                                 print("    - Members:")
                                 for member in team.members:
                                     print(f"     - {member.name} {member.surname}")
-
             pause()
 
         elif choice == "11":
@@ -361,11 +380,7 @@ def run_menu():
 
         elif choice == "12":
 
-            leaders = []
-
-            for employee in employees:
-                if employee.employee_type == "leader":
-                    leaders.append(employee)
+            leaders = get_leaders(employees)
 
             if not leaders:
                 print("There are no leaders.")
@@ -384,7 +399,6 @@ def run_menu():
                         print(error)
                     else:
                         print(f"Department {chosen_department.name} was added to leader {chosen_leader.name} {chosen_leader.surname}")
-
             pause()
 
 
