@@ -326,7 +326,7 @@ def run_menu():
                     if not leader.departments:
                         print("    This leader has no department.")
                     else:
-                        print("   Departments:")
+                        print("   - Departments:")
                         for department in leader.departments:
                             print(f"    - {department.name}")
 

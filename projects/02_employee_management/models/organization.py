@@ -28,6 +28,7 @@ class Department:
         if name.isdigit():
             raise ValueError("Department name cannot contain only numbers.")
         self.manager = manager
+        self.leader = None
         self.employees = []
         self.teams = []
     
@@ -87,7 +88,10 @@ class Leader(Manager):
             raise TypeError("Only a Department instance can be added to the list of departments.")
         if department in self.departments:
             raise ValueError("Department is already in list.")
+        if department.leader is not None:
+            raise ValueError("This department is already assigned to another leader.")
         self.departments.append(department)
+        department.leader = self
         save_log(f"Department: {department.name} assigned to list of leader {self.name} {self.surname}.")
 
     def list_departments(self):
