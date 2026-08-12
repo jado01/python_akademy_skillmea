@@ -1,7 +1,7 @@
 import os
 from models.employee import Employee
 from models.organization import Manager, Department, Leader
-from services.data_storage import save_employees, load_employees
+from services.data_storage import save_employees, load_employees, save_departments, load_departments
 
 
 def clear_terminal():
@@ -79,7 +79,7 @@ def get_leaders(employees):
 
 def run_menu():
     employees = load_employees()
-    departments = []
+    departments = load_departments(employees)
 
     while True:
         clear_terminal()
@@ -229,6 +229,7 @@ def run_menu():
                         else:
                             new_department = Department(department_name, found_manager)
                             departments.append(new_department)
+                            save_departments(departments)
                             print(f"New department {department_name} with manager {found_manager.name} {found_manager.surname} created")
                             break
                     break
@@ -398,6 +399,7 @@ def run_menu():
                     except ValueError as error:
                         print(error)
                     else:
+                        save_departments(departments)
                         print(f"Department {chosen_department.name} was added to leader {chosen_leader.name} {chosen_leader.surname}")
             pause()
 
