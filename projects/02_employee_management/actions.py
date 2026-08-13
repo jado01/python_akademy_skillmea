@@ -1,6 +1,6 @@
-from helpers import pause, get_non_empty_input
+from helpers import pause, get_non_empty_input, get_leaders
 from models.employee import Employee
-from models.organization import Manager, Department
+from models.organization import Department, Leader, Manager
 from services.data_storage import save_employees, save_departments
 from services.audit_log import save_log
 from helpers import select_department, select_employee, select_team
@@ -76,7 +76,7 @@ def increase_employee_salary(employees):
 def create_manager(employees):
     name = get_non_empty_input("Enter a name: ")
     surname = get_non_empty_input("Enter a surname: ")
-    position = get_non_empty_input("Enter a position: ")            
+    position = get_non_empty_input("Enter a position: ")
 
     while True:
         try:
@@ -168,8 +168,8 @@ def add_employee_to_department(employees, departments):
         if not available_employees:
             print("There are no employees available to add.")
         else:
-            found_department = select_department(departments)                                                
-        
+            found_department = select_department(departments)
+
             print(f"Which employee do you want to add to department {found_department.name}?")
 
             while True:
@@ -190,7 +190,7 @@ def create_team(departments):
         print("You need to create a department before creating a team.")
     else:
         found_department = select_department(departments)
-        
+
         while True:
             team_name = get_non_empty_input("Please enter a team name: ")
             try:
@@ -229,3 +229,104 @@ def add_employee_to_team(departments):
                     print(f"Employee {chosen_employee.name} {chosen_employee.surname} from department {found_department.name} was added to team {found_team.name}")
                     print(found_team.list_members())
     pause()
+
+def show_organization_structure(employees, departments):
+    leaders = get_leaders(employees)
+
+    print("Organization structure:")
+
+    if not leaders:
+        print("There are no leaders in the organization.")
+    else:
+        print(f" - Leaders:")
+        for leader in leaders:
+            print(f"  - {leader.name} {leader.surname}")
+            if not leader.departments:
+                print("    This leader has no department.")
+            else:
+                print("   - Departments:")
+                for department in leader.departments:
+                    print(f"    - {department.name}")
+
+    if not departments:
+        print("You need at least one department to show organization structure.")
+    else:
+        for department in departments:
+            print(f" - Department: {department.name}")
+            print(f"  - Manager: {department.manager.name} {department.manager.surname}")
+
+            if not department.employees:
+                print("  - There are no employees in this department.")
+            else:
+                print("  - Employees:")
+                for employee in department.employees:
+                    print(f"   - {employee.name} {employee.surname}")
+
+            if not department.teams:
+                print("  - There are no teams in this department.")
+            else:
+                print("  - Teams:")
+                for team in department.teams:
+                    print(f"   - {team.name}")
+
+                    if not team.members:
+                        print("    - There are no members in this team.")
+                    else:
+                        print("    - Members:")
+                        for member in team.members:
+                            print(f"     - {member.name} {member.surname}")
+    pause()
+
+def create_leader(employees):
+    name = get_non_empty_input("Enter a name: ")
+    surname = get_non_empty_input("Enter a surname: ")
+    position = get_non_empty_input("Enter a position: ")
+
+    while True:
+        try:
+            salary = int(input("Enter a salary: "))
+            new_leader = Leader(name, surname, position, salary)
+        except ValueError:
+            print("Salary must by a number and higher than 0!")
+            continue
+        break
+
+    employees.append(new_leader)
+    save_employees(employees)
+    save_log(f"{new_leader} created.")
+    print(f"New leader with ID: {new_leader.employee_id} name: {new_leader.name}, surname: {new_leader.surname}, position: {new_leader.position}, salary: {new_leader.salary} created.")
+    pause()
+
+def assign_department_to_leader(employees, departments):
+    leaders = get_leaders(employees)
+
+    if not leaders:
+        print("There are no leaders.")
+    else:
+        if not departments:
+            print("You need to create a department before adding to leader.")
+
+        else:
+            chosen_leader = select_employee(leaders)
+
+            chosen_department = select_department(departments)
+
+            try:
+                chosen_leader.add_department(chosen_department)
+            except ValueError as error:
+                print(error)
+            else:
+                save_departments(departments)
+                print(f"Department {chosen_department.name} was added to leader {chosen_leader.name} {chosen_leader.surname}")
+    pause()
+
+def record_leader_decision(employees):
+    leaders = get_leaders(employees)
+    if not leaders:
+        print("There are no leaders.")
+    else:
+        chosen_leader = select_employee(leaders)
+        decision = get_non_empty_input("Decision: ")
+        chosen_leader.record_decision(decision)
+        print(f"Leader ID: {chosen_leader.employee_id}, {chosen_leader.name} {chosen_leader.surname} recorded decision: {decision}")
+        pause()
