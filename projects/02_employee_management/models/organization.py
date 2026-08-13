@@ -114,6 +114,14 @@ class Leader(Manager):
             lines.append(f" - {department.name}")
         return "\n".join(lines)
 
+    def record_decision(self, decision):
+        if not isinstance(decision, str):
+            raise TypeError("Decision of the leader must be a string.")
+        decision = decision.strip()
+        if not decision:
+            raise ValueError("Decision of the leader cannot be empty.")
+        save_log(f"Leader ID: {self.employee_id}, {self.name} {self.surname} recorded decision: {decision}")
+
     @property
     def employee_type(self):
         return "leader"

@@ -97,7 +97,8 @@ def run_menu():
     10. Show organization structure
     11. Create a new Leader
     12. Add department to leader
-    13. Exit
+    13. Record a leader decision
+    14. Exit
     """)
 
         choice = input("Please choose an option: ")
@@ -410,11 +411,21 @@ def run_menu():
                         print(f"Department {chosen_department.name} was added to leader {chosen_leader.name} {chosen_leader.surname}")
             pause()
 
-
         elif choice == "13":
+            leaders = get_leaders(employees)
+            if not leaders:
+                print("There are no leaders.")
+            else:
+                chosen_leader = select_employee(leaders)
+                decision = get_non_empty_input("Decision: ")
+                chosen_leader.record_decision(decision)
+                print(f"Leader ID: {chosen_leader.employee_id}, {chosen_leader.name} {chosen_leader.surname} recorded decision: {decision}")
+                pause()
+
+        elif choice == "14":
             print("The program is over")
             break
 
         else:
-            print("Invalid choice, please choose 1 - 13.")
+            print("Invalid choice, please choose 1 - 14.")
             pause()
