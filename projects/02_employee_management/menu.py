@@ -284,6 +284,7 @@ def run_menu():
                     except ValueError as error:
                         print(error)
                     else:
+                        save_departments(departments)
                         print(f"Team {new_team.name} was added to department {found_department.name}")
                         print(found_department.list_teams())
                         break
@@ -310,6 +311,7 @@ def run_menu():
                         except ValueError as error:
                             print(error)
                         else:
+                            save_departments(departments)
                             print(f"Employee {chosen_employee.name} {chosen_employee.surname} from department {found_department.name} was added to team {found_team.name}")
                             print(found_team.list_members())
             pause()

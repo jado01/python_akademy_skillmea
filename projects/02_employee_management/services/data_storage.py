@@ -57,11 +57,21 @@ def save_departments(departments):
             leader_id = department.leader.employee_id
 
         employee_ids = []
+        teams_data = []
+
+        for team in department.teams:
+            member_ids = []
+
+            for member in team.members:
+                member_ids.append(member.employee_id)
+
+            team_data = {"team_name": team.name, "member_ids": member_ids}
+            teams_data.append(team_data)
 
         for employee in department.employees:
             employee_ids.append(employee.employee_id)
 
-        department_data = {"department_name": department.name, "manager_id": department.manager.employee_id, "leader_id": leader_id, "employee_ids": employee_ids}
+        department_data = {"department_name": department.name, "manager_id": department.manager.employee_id, "leader_id": leader_id, "employee_ids": employee_ids, "teams": teams_data}
         departments_list.append(department_data)
 
     with open(ORGANIZATION_FILE, "w", encoding="utf-8") as f:
@@ -81,6 +91,7 @@ def load_departments(employees):
                 manager_id = department_data["manager_id"]
                 leader_id = department_data["leader_id"]
                 employee_ids = department_data["employee_ids"]
+                teams_data = department_data["teams"]                
 
                 for employee in employees:
                     if manager_id == employee.employee_id:
@@ -124,6 +135,24 @@ def load_departments(employees):
 
                     department.add_employee(found_employee, log_event=False)
 
+                for team_data in teams_data:
+                    team_name = team_data["team_name"]
+                    member_ids = team_data["member_ids"]
+                    team = department.create_team(team_name)
+
+                    for member_id in member_ids:
+                        found_member = None
+
+                        for employee in employees:
+
+                            if member_id == employee.employee_id:
+                                found_member = employee
+                                break
+
+                        if found_member is None:
+                            raise ValueError(f"Team {team_name} refers to missing member ID {member_id}")
+
+                        team.add_member(found_member)
 
                 departments_list.append(department)
 
