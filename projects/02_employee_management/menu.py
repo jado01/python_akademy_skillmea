@@ -2,6 +2,7 @@ import os
 from models.employee import Employee
 from models.organization import Manager, Department, Leader
 from services.data_storage import save_employees, load_employees, save_departments, load_departments
+from services.audit_log import save_log
 
 
 def clear_terminal():
@@ -117,6 +118,7 @@ def run_menu():
 
             employees.append(new_employee)
             save_employees(employees)
+            save_log(f"{new_employee} created.")
             print(f"New employee with ID: {new_employee.employee_id} name: {new_employee.name}, surname: {new_employee.surname}, position: {new_employee.position}, salary: {new_employee.salary} created.")
             pause()
 
@@ -183,6 +185,7 @@ def run_menu():
 
             employees.append(new_manager)
             save_employees(employees)
+            save_log(f"{new_manager} created.")
             print(f"New manager with ID: {new_manager.employee_id} name: {new_manager.name}, surname: {new_manager.surname}, position: {new_manager.position}, salary: {new_manager.salary} created.")
             pause()
 
@@ -379,6 +382,7 @@ def run_menu():
 
             employees.append(new_leader)
             save_employees(employees)
+            save_log(f"{new_leader} created.")
             print(f"New leader with ID: {new_leader.employee_id} name: {new_leader.name}, surname: {new_leader.surname}, position: {new_leader.position}, salary: {new_leader.salary} created.")
             pause()
 
