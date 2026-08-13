@@ -190,7 +190,7 @@ def run_menu():
             managers = []
 
             for employee in employees:
-                if employee.employee_type == "manager":
+                if employee.employee_type == "manager" and employee.managed_department is None:
                     managers.append(employee)
 
             if not managers:
@@ -249,7 +249,7 @@ def run_menu():
             else:
                 available_employees = []
                 for employee in employees:
-                    if employee.employee_type == "employee":
+                    if employee.employee_type == "employee" and employee.department is None:
                         available_employees.append(employee)
                 if not available_employees:
                     print("There are no employees available to add.")

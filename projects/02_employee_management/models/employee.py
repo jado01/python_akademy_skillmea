@@ -7,6 +7,7 @@ class Employee:
         self.surname = surname
         self.position = position
         self.salary = salary
+        self.department = None
         if employee_id is None:
             self.employee_id = Employee._next_id
             Employee._next_id += 1

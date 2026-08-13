@@ -2,6 +2,10 @@ from models.employee import Employee
 from services.audit_log import save_log
 
 class Manager(Employee):
+    def __init__(self, name, surname, position, salary, employee_id=None):
+        super().__init__(name, surname, position, salary, employee_id=employee_id)
+        self.managed_department = None
+
     def add_employee_to_department(self, department, employee):
         if not isinstance(department, Department):
             raise TypeError("Department must be an instance of Department.")
@@ -25,9 +29,12 @@ class Department:
             raise TypeError("Department manager must be an instance of Manager.")
         if manager.employee_type != "manager":
             raise ValueError("Department manager must have employee type 'manager'.")
+        if manager.managed_department is not None:
+            raise ValueError("This manager is already assigned to another department.")
         if name.isdigit():
             raise ValueError("Department name cannot contain only numbers.")
         self.manager = manager
+        manager.managed_department = self
         self.leader = None
         self.employees = []
         self.teams = []
@@ -37,7 +44,10 @@ class Department:
             raise TypeError(f"Only an Employee instance can be added to department {self.name}")
         if employee in self.employees:
             raise ValueError(f"Employee is already in department {self.name}")
+        if employee.department is not None:
+            raise ValueError("Employee is already assigned to another department.")
         self.employees.append(employee)
+        employee.department = self
         if log_event is True:
             save_log(f"Employee: {employee.name} {employee.surname}, position: {employee.position}, added to department: {self.name}.")
 
