@@ -12,20 +12,27 @@ def run_menu():
     while True:
         clear_terminal()
         print("""--== Employee management system ==--
+
+Employee management
     1. Create new employee
-    2. Show all employees
+    2. Create a new manager
     3. Increase an employee's salary
-    4. Create a new manager
+    4. Show all employees
+
+Department and team management
     5. Create a new department
-    6. Show all departments.
-    7. Add an employee to a department
-    8. Create a new team
-    9. Add an employee to a team
-    10. Show organization structure
-    11. Create a new Leader
-    12. Add department to leader
-    13. Record a leader decision
-    14. Exit
+    6. Add an employee to a department
+    7. Create a new team
+    8. Add an employee to a team
+    9. Show all departments
+
+Organization and leader management
+    10. Create a new leader
+    11. Add department to leader
+    12. Record a leader decision
+    13. Show organization structure
+
+    0. Exit
     """)
 
         choice = input("Please choose an option: ")
@@ -34,45 +41,45 @@ def run_menu():
             create_employee(employees)
 
         elif choice == "2":
-            show_all_employees(employees)
+            create_manager(employees)
                 
         elif choice == "3":
             increase_employee_salary(employees)
 
         elif choice == "4":
-            create_manager(employees)
+            show_all_employees(employees)
 
         elif choice == "5":
             create_department(employees, departments)
 
         elif choice == "6":
-            show_departments(departments)
-
-        elif choice == "7":
             add_employee_to_department(employees, departments)
 
-        elif choice == "8":
+        elif choice == "7":
             create_team(departments)
 
-        elif choice == "9":
+        elif choice == "8":
             add_employee_to_team(departments)
 
-        elif choice == "10":
-            show_organization_structure(employees, departments)
+        elif choice == "9":
+            show_departments(departments)
 
-        elif choice == "11":
+        elif choice == "10":
             create_leader(employees)
 
-        elif choice == "12":
+        elif choice == "11":
             assign_department_to_leader(employees, departments)
 
-        elif choice == "13":
+        elif choice == "12":
             record_leader_decision(employees)
 
-        elif choice == "14":
+        elif choice == "13":
+            show_organization_structure(employees, departments)
+
+        elif choice == "0":
             print("The program is over")
             break
 
         else:
-            print("Invalid choice, please choose 1 - 14.")
+            print("Invalid choice, please choose 1 - 13 or 0 for exit.")
             pause()
