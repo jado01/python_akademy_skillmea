@@ -4,7 +4,7 @@ def clear_terminal():
     os.system("cls") if os.name == "nt" else os.system("clear")
         
 def pause():
-    input("Press Enter to return to the main menu....")
+    input("Press Enter to return to the main menu...")
 
 def get_non_empty_input(prompt):
     while True:

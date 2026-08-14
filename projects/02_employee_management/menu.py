@@ -35,7 +35,13 @@ Organization and leader management
     0. Exit
     """)
 
-        choice = input("Please choose an option: ")
+        while True:
+            choice = input("Please choose an option: ")
+
+            if choice.isdigit() and 0 <= int(choice) <= 13:
+                break
+            else:
+                print("Invalid choice, please choose 1 - 13 or 0 for exit.")
 
         if choice == "1":
             create_employee(employees)
@@ -79,7 +85,3 @@ Organization and leader management
         elif choice == "0":
             print("The program is over")
             break
-
-        else:
-            print("Invalid choice, please choose 1 - 13 or 0 for exit.")
-            pause()

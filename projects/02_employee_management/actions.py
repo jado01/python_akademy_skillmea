@@ -15,22 +15,41 @@ def create_employee(employees):
             salary = int(input("Enter a salary: "))
             new_employee = Employee(name, surname, position, salary)
         except ValueError:
-            print("Salary must by a number and higher then 0!")
+            print("Salary must be a number and greater than 0!")
             continue
         break
 
     employees.append(new_employee)
     save_employees(employees)
     save_log(f"{new_employee} created.")
-    print(f"New employee with ID: {new_employee.employee_id} name: {new_employee.name}, surname: {new_employee.surname}, position: {new_employee.position}, salary: {new_employee.salary} created.")
+    print(f"\nEmployee created successfully:\n  ID: {new_employee.employee_id}\n  Name: {new_employee.name} {new_employee.surname}\n  Position: {new_employee.position}\n  Salary: {new_employee.salary}\n")
     pause()
 
 def show_all_employees(employees):
     if not employees:
         print("\nThere are no employees.\n")
     else:
+        print("\nAll employees:\n")
+        print(
+            f"{'ID':<5}"
+            f"{'Type':<12}"
+            f"{'Name':<25}"
+            f"{'Position':<30}"
+            f"{'Salary':>10}"
+        )
+        print("-" * 82)
+
         for employee in employees:
-            print(employee)
+            full_name = f"{employee.name} {employee.surname}"
+
+            print(
+                f"{employee.employee_id:<5}"
+                f"{employee.employee_type:<12}"
+                f"{full_name:<25}"
+                f"{employee.position:<30}"
+                f"{employee.salary:>10}"
+            )
+        print()
     pause()
 
 def increase_employee_salary(employees):
@@ -38,8 +57,11 @@ def increase_employee_salary(employees):
         print("\nThere are no employees.\n")
     else:
         found_employee = None
+        print("\nAvailable employees:\n")
+        for employee in employees:
+            print(f"  ID {employee.employee_id} | {employee.name} {employee.surname} | salary: {employee.salary}")
         try:
-            entered_id = int(input("Enter ID of employee: "))
+            entered_id = int(input("\nEnter ID of employee: "))
             for employee in employees:
                 if employee.employee_id == entered_id:
                     found_employee = employee
@@ -52,25 +74,46 @@ def increase_employee_salary(employees):
         if found_employee is None:
             print("There is no employee with this ID.")
         else:
-            confirmation = input(f"CONFIRMATION! This employee? {found_employee}? (y / n): ").strip().lower()
+            print(
+                "\nSelected employee:\n\n"
+                f"  ID: {found_employee.employee_id}\n"
+                f"  Name: {found_employee.name} {found_employee.surname}\n"
+                f"  Position: {found_employee.position}\n"
+                f"  Salary: {found_employee.salary}\n"
+                )
 
-            if confirmation == "y":
-                old_salary = found_employee.salary
+            while True:
+                confirmation = input(
+                    "Increase the salary of this employee? (y/n): "
+                    ).strip().lower()
 
-                while True:
-                    try:
-                        increase_amount = int(input("Enter the amount of the salary increase: "))
-                        found_employee.raise_salary(increase_amount)
-                    except ValueError:
-                        print("Amount must be a number and higher then 0!")
-                        continue
+                if confirmation == "y":
+                    old_salary = found_employee.salary
+
+                    while True:
+                        try:
+                            increase_amount = int(input("\nEnter the amount of the salary increase: "))
+                            found_employee.raise_salary(increase_amount)
+                        except ValueError:
+                            print("Amount must be a number and higher then 0!")
+                            continue
+                        break
+
+                    save_employees(employees)
+                    print("\nSalary increased successfully:\n\n"
+                        f"  Employee: {found_employee.name} {found_employee.surname}\n"
+                        f"  Previous salary: {old_salary}\n"
+                        f"  Increase: {increase_amount}\n"
+                        f"  New salary: {found_employee.salary}\n"
+                        )
                     break
-                save_employees(employees)
-                print(f"Salary of {found_employee.name} {found_employee.surname} was increased by {increase_amount} from {old_salary} to {found_employee.salary}.")
-            elif confirmation == "n":
-                print("Operation was canceled.")
-            else:
-                print("Invalid input.")
+
+                elif confirmation == "n":
+                    print("\nOperation was canceled.\n")
+                    break
+
+                else:
+                    print("\nInvalid input. Please enter y or n.\n")
     pause()
 
 def create_manager(employees):
@@ -90,7 +133,7 @@ def create_manager(employees):
     employees.append(new_manager)
     save_employees(employees)
     save_log(f"{new_manager} created.")
-    print(f"New manager with ID: {new_manager.employee_id} name: {new_manager.name}, surname: {new_manager.surname}, position: {new_manager.position}, salary: {new_manager.salary} created.")
+    print(f"\nManager created successfully:\n  ID: {new_manager.employee_id}\n  Name: {new_manager.name} {new_manager.surname}\n  Position: {new_manager.position}\n  Salary: {new_manager.salary}\n")
     pause()
 
 def create_department(employees, departments):
@@ -294,7 +337,7 @@ def create_leader(employees):
     employees.append(new_leader)
     save_employees(employees)
     save_log(f"{new_leader} created.")
-    print(f"New leader with ID: {new_leader.employee_id} name: {new_leader.name}, surname: {new_leader.surname}, position: {new_leader.position}, salary: {new_leader.salary} created.")
+    print(f"\nLeader created successfully:\n  ID: {new_leader.employee_id}\n  Name: {new_leader.name} {new_leader.surname}\n  Position: {new_leader.position}\n  Salary: {new_leader.salary}\n")
     pause()
 
 def assign_department_to_leader(employees, departments):
