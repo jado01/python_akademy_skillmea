@@ -1,9 +1,10 @@
-from helpers import clear_terminal, pause
+from helpers import clear_terminal
 from services.data_storage import load_employees, load_departments
 from actions import add_employee_to_team, add_employee_to_department, assign_department_to_leader
 from actions import create_employee, create_department, create_leader, create_manager, create_team
-from actions import increase_employee_salary, show_all_employees, show_departments, show_organization_structure
+from actions import increase_employee_salary, show_all_employees, show_departments
 from actions import record_leader_decision
+from organization_structure import print_organization_structure
 
 def run_menu():
     employees = load_employees()
@@ -80,7 +81,7 @@ Organization and leader management
             record_leader_decision(employees)
 
         elif choice == "13":
-            show_organization_structure(employees, departments)
+            print_organization_structure(employees, departments)
 
         elif choice == "0":
             print("The program is over")

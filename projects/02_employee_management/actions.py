@@ -333,53 +333,6 @@ def add_employee_to_team(departments):
                         print()
     pause()
 
-def show_organization_structure(employees, departments):
-    leaders = get_leaders(employees)
-
-    print("Organization structure:")
-
-    if not leaders:
-        print("There are no leaders in the organization.")
-    else:
-        print(f" - Leaders:")
-        for leader in leaders:
-            print(f"  - {leader.name} {leader.surname}")
-            if not leader.departments:
-                print("    This leader has no department.")
-            else:
-                print("   - Departments:")
-                for department in leader.departments:
-                    print(f"    - {department.name}")
-
-    if not departments:
-        print("You need at least one department to show organization structure.")
-    else:
-        for department in departments:
-            print(f" - Department: {department.name}")
-            print(f"  - Manager: {department.manager.name} {department.manager.surname}")
-
-            if not department.employees:
-                print("  - There are no employees in this department.")
-            else:
-                print("  - Employees:")
-                for employee in department.employees:
-                    print(f"   - {employee.name} {employee.surname}")
-
-            if not department.teams:
-                print("  - There are no teams in this department.")
-            else:
-                print("  - Teams:")
-                for team in department.teams:
-                    print(f"   - {team.name}")
-
-                    if not team.members:
-                        print("    - There are no members in this team.")
-                    else:
-                        print("    - Members:")
-                        for member in team.members:
-                            print(f"     - {member.name} {member.surname}")
-    pause()
-
 def create_leader(employees):
     clear_terminal()
     name = get_non_empty_input("Enter a name: ")
