@@ -21,7 +21,7 @@ def get_non_empty_input(prompt):
         return value
 
 def select_department(departments):
-    print("Available departments:\n")
+    print("\nAvailable departments:\n")
     for number, department in enumerate(departments, start=1):
         print(f"  {number}. {department.name:<23}"
               f"  | Manager: {department.manager.name} {department.manager.surname}"
@@ -58,8 +58,8 @@ def select_team(department):
 
         print("\nThis team doesn't exist.\n")
 
-def select_employee(employees):
-    print("Available employees:\n")
+def select_employee(employees, heading="Available employees:"):
+    print(f"{heading}\n")
     for employee in employees:
         full_name = f"{employee.name} {employee.surname}"
 
@@ -73,14 +73,14 @@ def select_employee(employees):
         try:
             chosen_employee_id = int(input("Enter ID of employee: "))
         except ValueError:
-            print("ID must be a number.")
+            print("\nID must be a number.\n")
             continue
 
         for employee in employees:
             if employee.employee_id == chosen_employee_id:
                 return employee
 
-        print("Employee with this ID doesn't exist.")
+        print("\nEmployee with this ID doesn't exist.\n")
 
 def get_leaders(employees):
     leaders = []

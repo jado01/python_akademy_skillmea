@@ -381,6 +381,7 @@ def show_organization_structure(employees, departments):
     pause()
 
 def create_leader(employees):
+    clear_terminal()
     name = get_non_empty_input("Enter a name: ")
     surname = get_non_empty_input("Enter a surname: ")
     position = get_non_empty_input("Enter a position: ")
@@ -390,17 +391,18 @@ def create_leader(employees):
             salary = int(input("Enter a salary: "))
             new_leader = Leader(name, surname, position, salary)
         except ValueError:
-            print("Salary must by a number and higher than 0!")
+            print("Salary must be a number and higher than 0!")
             continue
         break
 
     employees.append(new_leader)
     save_employees(employees)
     save_log(f"{new_leader} created.")
-    print(f"\nLeader created successfully:\n  ID: {new_leader.employee_id}\n  Name: {new_leader.name} {new_leader.surname}\n  Position: {new_leader.position}\n  Salary: {new_leader.salary}\n")
+    print(f"\nLeader created successfully:\n\n  ID: {new_leader.employee_id}\n  Name: {new_leader.name} {new_leader.surname}\n  Position: {new_leader.position}\n  Salary: {new_leader.salary}\n")
     pause()
 
 def assign_department_to_leader(employees, departments):
+    clear_terminal()
     leaders = get_leaders(employees)
 
     if not leaders:
@@ -410,26 +412,45 @@ def assign_department_to_leader(employees, departments):
             print("You need to create a department before adding to leader.")
 
         else:
-            chosen_leader = select_employee(leaders)
+            available_departments = []
 
-            chosen_department = select_department(departments)
+            for department in departments:
+                if department.leader is None:
+                    available_departments.append(department)
 
-            try:
-                chosen_leader.add_department(chosen_department)
-            except ValueError as error:
-                print(error)
+            if not available_departments:
+                print("There are no available departments to assign.\n")
             else:
-                save_departments(departments)
-                print(f"Department {chosen_department.name} was added to leader {chosen_leader.name} {chosen_leader.surname}")
+                print("First, select a leader to assign a department.\n")
+
+                chosen_leader = select_employee(leaders, "Available leaders:")
+
+                chosen_department = select_department(available_departments)
+
+                try:
+                    chosen_leader.add_department(chosen_department)
+                except ValueError as error:
+                    print(error)
+                else:
+                    save_departments(departments)
+                    print("\nDepartment assigned successfully:\n")
+                    print(f"  Department: {chosen_department.name}\n"
+                        f"  Leader: {chosen_leader.name} {chosen_leader.surname}\n"
+                        )
     pause()
 
 def record_leader_decision(employees):
+    clear_terminal()
     leaders = get_leaders(employees)
     if not leaders:
         print("There are no leaders.")
     else:
-        chosen_leader = select_employee(leaders)
-        decision = get_non_empty_input("Decision: ")
+        print("\nFirst, select the leader who will record a decision.\n")
+        chosen_leader = select_employee(leaders, "Available leaders:")
+        decision = get_non_empty_input("Enter the decision: ")
         chosen_leader.record_decision(decision)
-        print(f"Leader ID: {chosen_leader.employee_id}, {chosen_leader.name} {chosen_leader.surname} recorded decision: {decision}")
+        print("\nDecision recorded successfully:\n\n"
+              f"  Leader: {chosen_leader.name} {chosen_leader.surname}\n"
+              f"  Decision: {decision}\n"
+              )
         pause()
