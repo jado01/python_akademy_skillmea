@@ -38,7 +38,7 @@ class Department:
         self.leader = None
         self.employees = []
         self.teams = []
-    
+
     def add_employee(self, employee, log_event=True):
         if not isinstance(employee, Employee):
             raise TypeError(f"Only an Employee instance can be added to department {self.name}")
@@ -52,11 +52,17 @@ class Department:
             save_log(f"Employee: {employee.name} {employee.surname}, position: {employee.position}, added to department: {self.name}.")
 
     def list_employees(self):
+
         if not self.employees:
             return f"Department {self.name} has no employee."
-        lines =  [f"Employees in department {self.name}:"]
+        lines =  [
+            f"Employees in department {self.name}:",
+            ""
+            ]
+
         for employee in self.employees:
-            lines.append(f" - {employee.name} {employee.surname}")
+            lines.append(f"  - {employee.name} {employee.surname}")
+
         return "\n".join(lines)
 
     def create_team(self, name):
@@ -70,11 +76,17 @@ class Department:
         return new_team
 
     def list_teams(self):
+
         if not self.teams:
             return f"Department {self.name} has no teams."
-        lines = [f"Department {self.name} has these teams:"]
+        lines = [
+            f"Teams in department {self.name}:",
+            ""
+            ]
+
         for team in self.teams:
-            lines.append(f"- {team.name}")
+            lines.append(f"  - {team.name}")
+
         return "\n".join(lines)
 
     def add_employee_to_team(self, employee, team):
@@ -88,7 +100,7 @@ class Department:
             raise ValueError("This team is not from this department.")
         team.add_member(employee)
         save_log(f"Employee {employee.name} {employee.surname} from department {self.name} added to the team {team.name}.")
-            
+
 class Leader(Manager):
     def __init__(self, name, surname, position, salary, employee_id=None):
         super().__init__(name, surname, position, salary, employee_id=employee_id)
@@ -144,10 +156,15 @@ class Team:
         self.members.append(member)
 
     def list_members(self):
+
         if not self.members:
             return f"Team {self.name} has no members."
-        lines = [f"Team {self.name} has these members:"]
-        for member in self.members:
-            lines.append(f"- {member.name} {member.surname}")
-        return "\n".join(lines)
 
+        lines = [f"Members of team {self.name}:",
+                 ""
+                 ]
+
+        for member in self.members:
+            lines.append(f"  - {member.name} {member.surname}")
+
+        return "\n".join(lines)

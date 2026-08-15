@@ -21,33 +21,53 @@ def get_non_empty_input(prompt):
         return value
 
 def select_department(departments):
-    for department in departments:
-        print(f"Department: {department.name}, Manager: {department.manager.name} {department.manager.surname}")
+    print("Available departments:\n")
+    for number, department in enumerate(departments, start=1):
+        print(f"  {number}. {department.name:<23}"
+              f"  | Manager: {department.manager.name} {department.manager.surname}"
+              )
+    print()
 
     while True:
-        chosen_department = get_non_empty_input("Enter a name of department: ")
+        try:
+            chosen_number = int(input("Enter department number: "))
+        except ValueError:
+            print("\nPlease enter a valid number\n")
+            continue
 
-        for department in departments:
-            if department.name.lower() == chosen_department.lower():
-                return department
+        if chosen_number in range(1, len(departments) + 1):
+            return departments[chosen_number - 1]
 
-        print("This department doesn't exist.")
+        print("\nThis department doesn't exist.\n")
 
 def select_team(department):
-    print(department.list_teams())
+    print(f"Available teams in department {department.name}:\n")
+
+    for number, team in enumerate(department.teams, start=1):
+        print(f"  {number}. {team.name}")
 
     while True:
-        chosen_team = get_non_empty_input("Enter a name of team: ")
+        try:
+            chosen_number = int(input("\nEnter team number: "))
+        except ValueError:
+            print("\nPlease enter a valid number\n")
+            continue
 
-        for team in department.teams:
-            if team.name.lower() == chosen_team.lower():
-                return team
+        if chosen_number in range(1, len(department.teams) + 1):
+            return department.teams[chosen_number - 1]
 
-        print("This team doesn't exist.")
+        print("\nThis team doesn't exist.\n")
 
 def select_employee(employees):
+    print("Available employees:\n")
     for employee in employees:
-        print(employee)
+        full_name = f"{employee.name} {employee.surname}"
+
+        print(f"  ID: {employee.employee_id:<4}"
+              f"| {full_name:<28}"
+              f"| Position: {employee.position}"
+              )
+    print()
 
     while True:
         try:
