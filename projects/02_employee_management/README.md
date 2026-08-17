@@ -2,6 +2,10 @@
 
 A command-line application for managing employees, managers, leaders, departments, and teams.
 
+**Course snapshot: 1.0.0**
+
+> Further development continues in the standalone [employee-management-system](https://github.com/jado01/employee-management-system) repository. This course snapshot remains unchanged for reference.
+
 The project demonstrates object-oriented programming, inheritance, composition, validation, JSON data persistence, audit logging, and automated model tests. It was created as the second main project of the Skillmea Python Academy.
 
 ## Features
