@@ -49,12 +49,15 @@ class Department:
         self.employees.append(employee)
         employee.department = self
         if log_event is True:
-            save_log(f"Employee: {employee.name} {employee.surname}, position: {employee.position}, added to department: {self.name}.")
+            save_log(f"Employee: {employee.name} {employee.surname},"
+                     f" position: {employee.position},"
+                     f" added to department: {self.name}."
+            )
 
     def list_employees(self):
 
         if not self.employees:
-            return f"Department {self.name} has no employee."
+            return f"Department {self.name} has no employees."
         lines =  [
             f"Employees in department {self.name}:",
             ""
@@ -99,7 +102,10 @@ class Department:
         if team not in self.teams:
             raise ValueError("This team is not from this department.")
         team.add_member(employee)
-        save_log(f"Employee {employee.name} {employee.surname} from department {self.name} added to the team {team.name}.")
+        save_log(f"Employee {employee.name} {employee.surname}"
+                 f" from department {self.name}"
+                 f" added to the team {team.name}."
+        )
 
 class Leader(Manager):
     def __init__(self, name, surname, position, salary, employee_id=None):

@@ -17,7 +17,13 @@ def save_employees(employees):
 
     for employee in employees:
 
-        employee_data = {"employee_id": employee.employee_id, "employee_type": employee.employee_type, "name": employee.name, "surname": employee.surname, "position": employee.position, "salary": employee.salary}
+        employee_data = {"employee_id": employee.employee_id,
+                         "employee_type": employee.employee_type,
+                         "name": employee.name,
+                         "surname": employee.surname,
+                         "position": employee.position,
+                         "salary": employee.salary
+                         }
         employee_list.append(employee_data)
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
@@ -35,13 +41,29 @@ def load_employees():
                 employee_type = employee_data["employee_type"]
 
                 if employee_type == "leader":
-                    employee = Leader(employee_data["name"], employee_data["surname"], employee_data["position"], employee_data["salary"], employee_id=employee_data["employee_id"])
+                    employee = Leader(employee_data["name"],
+                                      employee_data["surname"],
+                                      employee_data["position"],
+                                      employee_data["salary"],
+                                      employee_id=employee_data["employee_id"]
+                                      )
 
                 elif employee_type == "manager":
-                    employee = Manager(employee_data["name"], employee_data["surname"], employee_data["position"], employee_data["salary"], employee_id=employee_data["employee_id"])
+                    employee = Manager(employee_data["name"],
+                                       employee_data["surname"],
+                                       employee_data["position"],
+                                       employee_data["salary"],
+                                       employee_id=employee_data["employee_id"]
+                                       )
 
                 else:
-                    employee = Employee(employee_data["name"], employee_data["surname"], employee_data["position"], employee_data["salary"], employee_id=employee_data["employee_id"])
+                    employee = Employee(employee_data["name"],
+                                        employee_data["surname"],
+                                        employee_data["position"],
+                                        employee_data["salary"],
+                                        employee_id=employee_data["employee_id"]
+                                        )
+
                 employee_list.append(employee)
 
     return employee_list
@@ -71,7 +93,14 @@ def save_departments(departments):
         for employee in department.employees:
             employee_ids.append(employee.employee_id)
 
-        department_data = {"department_name": department.name, "manager_id": department.manager.employee_id, "leader_id": leader_id, "employee_ids": employee_ids, "teams": teams_data}
+        department_data = {"department_name":
+                           department.name, "manager_id":
+                           department.manager.employee_id,
+                           "leader_id": leader_id,
+                           "employee_ids": employee_ids,
+                           "teams": teams_data
+                           }
+
         departments_list.append(department_data)
 
     with open(ORGANIZATION_FILE, "w", encoding="utf-8") as f:
@@ -91,7 +120,7 @@ def load_departments(employees):
                 manager_id = department_data["manager_id"]
                 leader_id = department_data["leader_id"]
                 employee_ids = department_data["employee_ids"]
-                teams_data = department_data["teams"]                
+                teams_data = department_data["teams"]
 
                 for employee in employees:
                     if manager_id == employee.employee_id:
@@ -101,7 +130,9 @@ def load_departments(employees):
                 department_name = department_data["department_name"]
 
                 if manager is None:
-                    raise ValueError(f"Department {department_name} refers to missing manager ID {manager_id}.")
+                    raise ValueError(f"Department {department_name}"
+                                     f" refers to missing manager ID {manager_id}."
+                                     )
                 else:
                     department = Department(department_name, manager)
 
@@ -114,10 +145,15 @@ def load_departments(employees):
                             break
 
                     if leader is None:
-                        raise ValueError(f"Department {department_name} refers to missing leader ID {leader_id}.")
+                        raise ValueError(f"Department {department_name}"
+                                         f" refers to missing leader ID {leader_id}."
+                                         )
 
-                    if leader.employee_type != "leader" :
-                        raise ValueError(f"Department {department_name} refers to employee ID {leader_id}, but this employee is not a leader.")
+                    if leader.employee_type != "leader":
+                        raise ValueError(f"Department {department_name}"
+                                         f" refers to employee ID {leader_id},"
+                                         f" but this employee is not a leader."
+                                         )
 
                     leader.add_department(department, log_event=False)
 
@@ -131,7 +167,9 @@ def load_departments(employees):
                             break
 
                     if found_employee is None:
-                        raise ValueError(f"Department {department_name} refers to missing employee ID {employee_id}.")
+                        raise ValueError(f"Department {department_name}"
+                                         f" refers to missing employee ID {employee_id}."
+                                         )
 
                     department.add_employee(found_employee, log_event=False)
 
@@ -150,7 +188,9 @@ def load_departments(employees):
                                 break
 
                         if found_member is None:
-                            raise ValueError(f"Team {team_name} refers to missing member ID {member_id}")
+                            raise ValueError(f"Team {team_name}"
+                                             f" refers to missing member ID {member_id}."
+                                             )
 
                         team.add_member(found_member)
 

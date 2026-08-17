@@ -15,14 +15,19 @@ def create_employee(employees):
             salary = int(input("Enter a salary: "))
             new_employee = Employee(name, surname, position, salary)
         except ValueError:
-            print("Salary must be a number and greater than 0!")
+            print("Salary must be a number greater than 0.")
             continue
         break
 
     employees.append(new_employee)
     save_employees(employees)
     save_log(f"{new_employee} created.")
-    print(f"\nEmployee created successfully:\n  ID: {new_employee.employee_id}\n  Name: {new_employee.name} {new_employee.surname}\n  Position: {new_employee.position}\n  Salary: {new_employee.salary}\n")
+    print(f"\nEmployee created successfully:\n"
+          f"  ID: {new_employee.employee_id}\n"
+          f"  Name: {new_employee.name} {new_employee.surname}\n"
+          f"  Position: {new_employee.position}\n"
+          f"  Salary: {new_employee.salary}\n"
+    )
     pause()
 
 def show_all_employees(employees):
@@ -61,7 +66,7 @@ def increase_employee_salary(employees):
         for employee in employees:
             print(f"  ID {employee.employee_id} | {employee.name} {employee.surname} | salary: {employee.salary}")
         try:
-            entered_id = int(input("\nEnter ID of employee: "))
+            entered_id = int(input("\nEnter employee ID: "))
             for employee in employees:
                 if employee.employee_id == entered_id:
                     found_employee = employee
@@ -80,7 +85,7 @@ def increase_employee_salary(employees):
                 f"  Name: {found_employee.name} {found_employee.surname}\n"
                 f"  Position: {found_employee.position}\n"
                 f"  Salary: {found_employee.salary}\n"
-                )
+            )
 
             while True:
                 confirmation = input(
@@ -95,7 +100,7 @@ def increase_employee_salary(employees):
                             increase_amount = int(input("\nEnter the amount of the salary increase: "))
                             found_employee.raise_salary(increase_amount)
                         except ValueError:
-                            print("\nAmount must be a number and higher than 0!")
+                            print("\nAmount must be a number greater than 0.")
                             continue
                         break
 
@@ -105,7 +110,7 @@ def increase_employee_salary(employees):
                         f"  Previous salary: {old_salary}\n"
                         f"  Increase: {increase_amount}\n"
                         f"  New salary: {found_employee.salary}\n"
-                        )
+                    )
                     break
 
                 elif confirmation == "n":
@@ -126,14 +131,19 @@ def create_manager(employees):
             salary = int(input("Enter a salary: "))
             new_manager = Manager(name, surname, position, salary)
         except ValueError:
-            print("Salary must be a number and higher than 0!")
+            print("Salary must be a number greater than 0.")
             continue
         break
 
     employees.append(new_manager)
     save_employees(employees)
     save_log(f"{new_manager} created.")
-    print(f"\nManager created successfully:\n  ID: {new_manager.employee_id}\n  Name: {new_manager.name} {new_manager.surname}\n  Position: {new_manager.position}\n  Salary: {new_manager.salary}\n")
+    print(f"\nManager created successfully:\n"
+          f"  ID: {new_manager.employee_id}\n"
+          f"  Name: {new_manager.name} {new_manager.surname}\n"
+          f"  Position: {new_manager.position}\n"
+          f"  Salary: {new_manager.salary}\n"
+    )
     pause()
 
 def create_department(employees, departments):
@@ -147,13 +157,13 @@ def create_department(employees, departments):
     if not managers:
         print("There are no available managers.\n"
               "Create a new manager before creating a department.\n"
-              )
+        )
         pause()
         return
 
     print("\nFirst, select an available manager for the new department.\n"
           "\nAvailable managers:\n"
-          )
+    )
     
     for manager in managers:
         print(f"  ID {manager.employee_id} | {manager.name} {manager.surname} | {manager.position}")
@@ -162,7 +172,7 @@ def create_department(employees, departments):
 
     while True:
         try:
-            manager_id = int(input("\nEnter ID of manager: "))
+            manager_id = int(input("\nEnter manager ID: "))
             for manager in managers:
                 if manager.employee_id == manager_id:
                     found_manager = manager
@@ -186,7 +196,7 @@ def create_department(employees, departments):
                         break
 
                 if existing_department is not None:
-                    print("This department already exist. Please try again")
+                    print("This department already exists. Please try again.")
                 else:
                     new_department = Department(department_name, found_manager)
                     departments.append(new_department)
@@ -194,7 +204,7 @@ def create_department(employees, departments):
                     print("\nDepartment created successfully:\n\n"
                           f"  Name: {new_department.name}\n"
                           f"  Manager: {found_manager.name} {found_manager.surname}"
-                          )
+                    )
                     print()
                     break
             break
@@ -257,7 +267,9 @@ def add_employee_to_department(employees, departments):
                 except ValueError as error:
                     print(error)
                 else:
-                    print(f"\nEmployee {chosen_employee.name} {chosen_employee.surname} added to department {found_department.name}\n")
+                    print(f"\nEmployee {chosen_employee.name} {chosen_employee.surname}"
+                          f" added to department {found_department.name}\n"
+                    )
                     break
     pause()
 
@@ -315,7 +327,9 @@ def add_employee_to_team(departments):
                     print("There are no available employees to add to this team.")
 
                 else:
-                    print(f"\nNow select an employee from department {found_department.name} to add to team {found_team.name}.\n")
+                    print(f"\nNow select an employee from department {found_department.name}"
+                          f" to add to team {found_team.name}.\n"
+                    )
                     chosen_employee = select_employee(available_employees)
 
                     try:
@@ -328,7 +342,7 @@ def add_employee_to_team(departments):
                             f"  Employee: {chosen_employee.name} {chosen_employee.surname}\n"
                             f"  Department: {found_department.name}\n"
                             f"  Team: {found_team.name}\n"
-                            )
+                        )
                         print(found_team.list_members())
                         print()
     pause()
@@ -344,14 +358,19 @@ def create_leader(employees):
             salary = int(input("Enter a salary: "))
             new_leader = Leader(name, surname, position, salary)
         except ValueError:
-            print("Salary must be a number and higher than 0!")
+            print("Salary must be a number greater than 0.")
             continue
         break
 
     employees.append(new_leader)
     save_employees(employees)
     save_log(f"{new_leader} created.")
-    print(f"\nLeader created successfully:\n\n  ID: {new_leader.employee_id}\n  Name: {new_leader.name} {new_leader.surname}\n  Position: {new_leader.position}\n  Salary: {new_leader.salary}\n")
+    print(f"\nLeader created successfully:\n\n"
+          f"  ID: {new_leader.employee_id}\n"
+          f"  Name: {new_leader.name} {new_leader.surname}\n"
+          f"  Position: {new_leader.position}\n"
+          f"  Salary: {new_leader.salary}\n"
+    )
     pause()
 
 def assign_department_to_leader(employees, departments):
@@ -362,7 +381,7 @@ def assign_department_to_leader(employees, departments):
         print("There are no leaders.")
     else:
         if not departments:
-            print("You need to create a department before adding to leader.")
+            print("You need to create a department before assigning one to a leader.")
 
         else:
             available_departments = []
@@ -389,7 +408,7 @@ def assign_department_to_leader(employees, departments):
                     print("\nDepartment assigned successfully:\n")
                     print(f"  Department: {chosen_department.name}\n"
                         f"  Leader: {chosen_leader.name} {chosen_leader.surname}\n"
-                        )
+                    )
     pause()
 
 def record_leader_decision(employees):
@@ -405,5 +424,5 @@ def record_leader_decision(employees):
         print("\nDecision recorded successfully:\n\n"
               f"  Leader: {chosen_leader.name} {chosen_leader.surname}\n"
               f"  Decision: {decision}\n"
-              )
-        pause()
+        )
+    pause()

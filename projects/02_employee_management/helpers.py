@@ -71,7 +71,7 @@ def select_employee(employees, heading="Available employees:"):
 
     while True:
         try:
-            chosen_employee_id = int(input("Enter ID of employee: "))
+            chosen_employee_id = int(input("Enter employee ID: "))
         except ValueError:
             print("\nID must be a number.\n")
             continue
